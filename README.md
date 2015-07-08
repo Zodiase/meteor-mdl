@@ -2,11 +2,11 @@ Material Design Lite wrapped for Meteor
 ==============================================================================
 Contains a custom build of `material.js` having `componentHandler` available globally.
 
-[Visit this page](http://www.getmdl.io/started/index.html) to learn how to get started with MDL.
+[Visit MDL's website](http://www.getmdl.io/started/index.html) to learn how to get started with MDL.
 
 Features
 ------------------------------------------------------------------------------
-* Exports `componentHandler` globally.
+* Exports `componentHandler` globally (Client Only).
 * Supports [Iron:Router](https://github.com/iron-meteor/iron-router).
 
 Install
@@ -14,3 +14,15 @@ Install
 ```Bash
 $ meteor add zodiase:mdl
 ```
+
+Content
+------------------------------------------------------------------------------
+| File            | Description                                     |
+| --------------- | ----------------------------------------------- |
+| package.js      | package descriptions.                           |
+| head.html       | used for adding fonts stylesheet to html head.  |
+| material.css    | css file built straight from MDL.               |
+| material.js     | custom built for exporting componentHandler.    |
+| export.js       | used for exporting componentHandler.            |
+| export-tests.js | tests of exporting.                             |
+| patchers/*      | helpers for adding more MDL's auto-upgrades.    |
