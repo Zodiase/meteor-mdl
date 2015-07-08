@@ -1,0 +1,40 @@
+Package.describe({
+	name: 'zodiase:mdl',
+	version: '0.0.1',
+	// Brief, one-line summary of the package.
+	summary: 'A wrapper package for Google\'s Material Design Lite.',
+	// URL to the Git repository containing the source code for this package.
+	git: '',
+	// By default, Meteor will default to using README.md for documentation.
+	// To avoid submitting documentation, set this field to null.
+	documentation: 'README.md'
+});
+
+Package.onUse(function (api) {
+	api.versionsFrom('1.1.0.2');
+	
+	// Add content to head.
+	api.use('templating', 'client');
+	api.addFiles('head.html', 'client');
+	
+	api.addFiles([
+		'material.css',
+		'material.js',
+		'export.js'
+	], 'client');
+	api.export("componentHandler", 'client');
+	// Patcher for iron:router users.
+	api.addFiles([
+		'patchers/iron-router.js'
+	], 'client');
+});
+
+Package.onTest(function (api) {
+	api.use('tinytest');
+	api.use('zodiase:mdl');
+	api.addFiles([
+		'export-tests.js'
+	], 'client');
+	
+	//! Need test for iron:router patcher.
+});
