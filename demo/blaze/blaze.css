@@ -1,0 +1,10 @@
+/* CSS declarations go here */
+.page-content {
+	border: 1px solid gray;
+	padding: 50px;
+}
+
+.testbutton {
+	width: 100px;
+	height: 100px;
+}

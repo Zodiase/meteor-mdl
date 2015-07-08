@@ -1,0 +1,35 @@
+<head>
+	<title>Blaze</title>
+</head>
+
+<body>
+	<h1>Welcome to Meteor!</h1>
+	<p>This demo is created to show the compatibility issue with MDL caused by Blaze's dynamic template rendering.</p>
+	<p>If everything looks fine, then probably I fixed the bug. <i class="material-icons">mood</i></p>
+	{{> tabs}}
+</body>
+<template name="tabs">
+	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect" for="1">Tab 1</button>
+	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect" for="2">Tab 2</button>
+	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect" for="3">Tab 3</button>
+	<div class="page-content">
+		{{#if tab 1}}
+			<button class="testbutton mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+				<i class="material-icons">add</i>
+			</button>
+			<p>
+			{{#if leftTab1}}
+				This button is re-rendered by Blaze and the ripple effect is gone. <br/> If the effect is still there, that means I have fixed the bug.
+			{{else}}
+				Big button with ripple effect.
+			{{/if}}
+			</p>
+		{{/if}}
+		{{#if tab 2}}
+			You clicked tab 2, now go back to tab 1.
+		{{/if}}
+		{{#if tab 3}}
+			You clicked tab 3, now go back to tab 1.
+		{{/if}}
+	</div>
+</template>
