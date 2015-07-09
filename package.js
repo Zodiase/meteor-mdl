@@ -14,7 +14,7 @@ Package.onUse(function (api) {
 	api.versionsFrom('1.1.0.2');
 	
 	// Add content to head.
-	api.use('templating', 'client');
+	api.use('templating');
 	api.addFiles('head.html', 'client');
 	
 	api.addFiles([
@@ -36,8 +36,10 @@ Package.onUse(function (api) {
 
 Package.onTest(function (api) {
 	api.use('tinytest');
+	api.use('jquery');
 	api.use('zodiase:mdl');
 	api.addFiles([
-		'export-tests.js'
+		'tests/export.js',
+		'tests/patcher-blaze.js'
 	], 'client');
 });
