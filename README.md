@@ -18,6 +18,12 @@ Install
 $ meteor add zodiase:mdl
 ```
 
+Change Log
+------------------------------------------------------------------------------
+* v1.0.0-1
+    * Started using `MutationObserver` to detect changes in DOM and then call MDL's `componentHandler.upgradeAllRegistered()`.
+    * If `MutationObserver` is not available, falls back to the old (buggy) approach.
+
 Content
 ------------------------------------------------------------------------------
 | File            | Description                                     |
@@ -26,9 +32,11 @@ Content
 | head.html       | used for adding fonts stylesheet to html head.  |
 | material.css    | css file built straight from MDL.               |
 | material.js     | custom built for exporting componentHandler.    |
+| envConfigs.js   | defines global vars shared among other scripts. |
 | export.js       | used for exporting componentHandler.            |
 | export-tests.js | tests of exporting.                             |
 | patchers/*      | helpers for adding more MDL's auto-upgrades.    |
+| demo/*          | demos.                                          |
 
 Versioning
 ------------------------------------------------------------------------------
