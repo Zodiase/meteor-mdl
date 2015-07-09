@@ -9,6 +9,16 @@ Contains a custom build of `material.js` having `componentHandler` available glo
 
 [![Build Status](https://travis-ci.org/Zodiase/meteor-mdl.svg?branch=master)](https://travis-ci.org/Zodiase/meteor-mdl)
 
+Looks like some other people also wrapped MDL, why use this one?
+------------------------------------------------------------------------------
+Because the ones I tried don't work. I'm trying to use MDL in some of my Meteor projects and there are issues that won't be fixed by just adding `material.js`.
+
+What I've experienced so far:
+
+* Can't export `componentHandler` with the official build since it's defined with the keyword `var`. To really ***use*** MDL, you need `componentHandler`.
+* When using Iron:Router, template rendering happens ***after*** `document.load` event, so MDL upgrades nothing by itself.
+* Even when not using Iron:Router, it's lucky that `document.load` works; when any MDL components get re-rendered by Blaze, they are screwed again. Because MDL won't automatically re-scan DOM for potential upgrades. Check out my [blaze demo](https://github.com/Zodiase/meteor-mdl/tree/master/demo/blaze) without using this package to see how bad it is.
+
 Features
 ------------------------------------------------------------------------------
 * Exports `componentHandler` globally (Client Only).
