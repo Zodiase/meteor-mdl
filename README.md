@@ -20,6 +20,8 @@ $ meteor add zodiase:mdl
 
 Change Log
 ------------------------------------------------------------------------------
+* v1.0.0-2
+	* Fixed a bug causing build to fail. 
 * v1.0.0-1
     * Started using `MutationObserver` to detect changes in DOM and then call MDL's `componentHandler.upgradeAllRegistered()`.
     * If `MutationObserver` is not available, falls back to the old (buggy) approach.
