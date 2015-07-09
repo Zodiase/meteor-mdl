@@ -1,4 +1,5 @@
 /*global EnvConfig:true*/
+/*global componentHandler:true*/
 
 // If blaze patcher worked, skip this.
 if (Object.prototype.hasOwnProperty.call(EnvConfig, 'blazeFix') && EnvConfig['blazeFix']) return;
@@ -7,7 +8,7 @@ EnvConfig['ironRouterFix'] = true;
 
 // Re-upgrade DOM after the layout is rendered.
 var onLayoutRendered = function () {
-	window.componentHandler.upgradeAllRegistered();
+	componentHandler.upgradeAllRegistered();
 };
 
 // Have a record to avoid injecting the handler twice.

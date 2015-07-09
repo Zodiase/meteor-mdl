@@ -6,13 +6,14 @@
 
 
 /*global EnvConfig:true*/
+/*global componentHandler:true*/
 
 if (typeof MutationObserver !== 'function') return;
 
 EnvConfig['blazeFix'] = true;
 
 var observer = new MutationObserver(function(mutations, observer) {
-	window.componentHandler.upgradeAllRegistered();
+	componentHandler.upgradeAllRegistered();
 }), observing = false, observeConfig = {
 		childList: true,
 		attributes: false,
