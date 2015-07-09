@@ -50,4 +50,5 @@ In addition, it has a fourth version number indicating revisions not related to 
 License
 ------------------------------------------------------------------------------
 ([MDL source](https://github.com/google/material-design-lite) is owned by Google and licensed under an Apache-2 license.)
+
 © Xingchen Hong, 2015. Licensed under an Apache-2 license.
