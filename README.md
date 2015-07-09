@@ -7,6 +7,8 @@ Contains a custom build of `material.js` having `componentHandler` available glo
 
 [Visit MDL's website](http://www.getmdl.io/started/index.html) to learn how to get started with MDL.
 
+[![Build Status](https://travis-ci.org/Zodiase/meteor-mdl.svg?branch=master)](https://travis-ci.org/Zodiase/meteor-mdl)
+
 Features
 ------------------------------------------------------------------------------
 * Exports `componentHandler` globally (Client Only).
