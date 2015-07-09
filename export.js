@@ -3,10 +3,11 @@ if (typeof Package !== 'undefined') {
 	componentHandler = this.componentHandler;
 	delete this.componentHandler;
 	
-	// Attach EnvConfig to componentHandler for public access.
-	/*global EnvConfig:true*/
-	componentHandler.envConfig = EnvConfig;
-	
 	// Add an alias. "Lite" is lowercase because I think it's not at the same level at "Material Design".
-	MDl = componentHandler;
+	/*global MDl:true*/
+	MDl = {
+		'componentHandler': componentHandler,
+		// Attach EnvConfig for public access.
+		'envConfig': EnvConfig
+	};
 }
