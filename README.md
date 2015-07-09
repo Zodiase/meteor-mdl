@@ -22,6 +22,8 @@ $ meteor add zodiase:mdl
 
 Change Log
 ------------------------------------------------------------------------------
+* v1.0.0-3
+	* Slightly improved blaze patcher.
 * v1.0.0-2
 	* Fixed a bug causing build to fail. 
 * v1.0.0-1
