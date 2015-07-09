@@ -1,6 +1,6 @@
 Package.describe({
 	name: 'zodiase:mdl',
-	version: '1.0.0-0',
+	version: '1.0.0-1',
 	// Brief, one-line summary of the package.
 	summary: 'A wrapper package for Google\'s Material Design Lite.',
 	// URL to the Git repository containing the source code for this package.
@@ -19,12 +19,14 @@ Package.onUse(function (api) {
 	
 	api.addFiles([
 		'material.css',
+		'envConfigs.js',
 		'material.js',
 		'export.js'
 	], 'client');
 	api.export("componentHandler", 'client');
-	// Patcher for iron:router users.
+	// Patchers.
 	api.addFiles([
+		'patchers/blaze.js',
 		'patchers/iron-router.js'
 	], 'client');
 });
@@ -35,6 +37,4 @@ Package.onTest(function (api) {
 	api.addFiles([
 		'export-tests.js'
 	], 'client');
-	
-	//! Need test for iron:router patcher.
 });
