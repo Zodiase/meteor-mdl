@@ -23,7 +23,10 @@ Package.onUse(function (api) {
 		'material.js',
 		'export.js'
 	], 'client');
-	api.export("componentHandler", 'client');
+	api.export([
+		"componentHandler",
+		"MDl"
+	], 'client');
 	// Patchers.
 	api.addFiles([
 		'patchers/blaze.js',

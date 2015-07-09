@@ -6,4 +6,7 @@ if (typeof Package !== 'undefined') {
 	// Attach EnvConfig to componentHandler for public access.
 	/*global EnvConfig:true*/
 	componentHandler.envConfig = EnvConfig;
+	
+	// Add an alias. "Lite" is lowercase because I think it's not at the same level at "Material Design".
+	MDl = componentHandler;
 }
