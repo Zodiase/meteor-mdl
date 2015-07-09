@@ -14,15 +14,36 @@ if (typeof MutationObserver !== 'function') return;
 
 EnvConfig['blazeFix'] = true;
 
+var handleMutation = function (mutation) {
+	switch (mutation.type) {
+		case 'attributes':
+			//! Try to upgrade this element.
+			break;
+		case 'characterData':
+			// Ignore character changes.
+			break;
+		case 'childList':
+			// Upgrade the new children.
+			if (mutation.addedNodes.length > 0 && mutation.target instanceof Element) {
+				console.log('upgrading');
+				componentHandler.upgradeAllRegistered(mutation.target);
+			}
+			break;
+		default:
+			throw new Error('Invalid type of mutation.');
+	}
+};
+
 var observerLocked = false;
 var observer = new MutationObserver(function(mutations, observer) {
 	// Use the lock to ignore mutations happened during the process of an update.
 	if (observerLocked) return;
 	observerLocked = true;
 	
+	mutations.forEach(handleMutation);
 	// componentHandler.upgradeAllRegistered uses querySelectorAll to find upgradable targets.
 	// so I don't really need to look into each mutations.
-	componentHandler.upgradeAllRegistered();
+// 	componentHandler.upgradeAllRegistered();
 	
 	observerLocked = false;
 }), observing = false, observeConfig = {
