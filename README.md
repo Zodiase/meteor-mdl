@@ -22,7 +22,7 @@ What I've experienced so far:
 Features
 ------------------------------------------------------------------------------
 * Exports `componentHandler` globally (Client Only).
-* Supports [Iron:Router](https://github.com/iron-meteor/iron-router).
+* Supports [Iron:Router](https://github.com/iron-meteor/iron-router).*
 
 Install
 ------------------------------------------------------------------------------
@@ -68,3 +68,7 @@ License
 ([MDL source](https://github.com/google/material-design-lite) is owned by Google and licensed under an Apache-2 license.)
 
 © Xingchen Hong, 2015. Licensed under an Apache-2 license.
+
+
+------------------------------------------------------------------------------
+\* See [issues](https://github.com/Zodiase/meteor-mdl/issues) for more detail.
