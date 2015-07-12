@@ -57,20 +57,12 @@ var componentHandler = (function() {
    * to create a new instance of.
    * @param {string} cssClass the name of the CSS class elements of this type
    * will have.
-   * @param {!Element | document} element The element under which the upgrade
-   * would occur.
    */
-  function upgradeDomInternal(jsClass, cssClass, element) {
-    if (element === undefined) {
-      element = document;
-    } else if (!(element instanceof Element || element === document)) {
-      throw new Error('Invalid argument provided to upgrade MDL nodes.');
-    }
+  function upgradeDomInternal(jsClass, cssClass) {
     if (jsClass === undefined && cssClass === undefined) {
       for (var i = 0; i < registeredComponents_.length; i++) {
         upgradeDomInternal(registeredComponents_[i].className,
-            registeredComponents_[i].cssClass,
-            element);
+            registeredComponents_[i].cssClass);
       }
     } else {
       if (cssClass === undefined) {
@@ -80,7 +72,7 @@ var componentHandler = (function() {
         }
       }
 
-      var elements = element.querySelectorAll('.' + cssClass);
+      var elements = document.querySelectorAll('.' + cssClass);
       for (var n = 0; n < elements.length; n++) {
         upgradeElementInternal(elements[n], jsClass);
       }
@@ -90,33 +82,52 @@ var componentHandler = (function() {
   /**
    * Upgrades a specific element rather than all in the DOM.
    * @param {HTMLElement} element The element we wish to upgrade.
-   * @param {string} jsClass The name of the class we want to upgrade
+   * @param {string} optJsClass Optional name of the class we want to upgrade
    * the element to.
    */
-  function upgradeElementInternal(element, jsClass) {
-    // Only upgrade elements that have not already been upgraded.
+  function upgradeElementInternal(element, optJsClass) {
+    // Verify argument type.
+    if (!(typeof element === 'object' && element instanceof Element)) {
+      throw new Error('Invalid argument provided to upgrade MDL element.');
+    }
     var dataUpgraded = element.getAttribute('data-upgraded');
+    // Use `['']` as default value to conform the `,name,name...` style.
+    var upgradedList = dataUpgraded === null ? [''] : dataUpgraded.split(',');
+    var classesToUpgrade = [];
+    // If jsClass is not provided scan the registered components to find the
+    // ones matching the element's CSS classList.
+    if (!optJsClass) {
+      var classList = element.classList;
+      registeredComponents_.forEach(function (component) {
+        // Match CSS & Not upgraded & Not to be upgraded.
+        if (classList.contains(component.cssClass) &&
+            upgradedList.indexOf(component.className) === -1 &&
+            classesToUpgrade.indexOf(component) === -1) {
+          classesToUpgrade.push(component);
+        }
+      });
+    } else if (upgradedList.indexOf(optJsClass) === -1) {
+      classesToUpgrade.push(findRegisteredClass_(optJsClass));
+    }
 
-    if (dataUpgraded === null || dataUpgraded.indexOf(jsClass) === -1) {
-      // Upgrade element.
-      if (dataUpgraded === null) {
-        dataUpgraded = '';
-      }
-      element.setAttribute('data-upgraded', dataUpgraded + ',' + jsClass);
-      var registeredClass = findRegisteredClass_(jsClass);
+    // Upgrade the element for each classes.
+    for (var i = 0, n = classesToUpgrade.length, registeredClass; i < n; i++) {
+      registeredClass = classesToUpgrade[i];
       if (registeredClass) {
-        // new
+        // Mark element as upgraded.
+        upgradedList.push(registeredClass.className);
+        element.setAttribute('data-upgraded', upgradedList.join(','));
         var instance = new registeredClass.classConstructor(element);
         instance[componentConfigProperty_] = registeredClass;
         createdComponents_.push(instance);
         // Call any callbacks the user has registered with this component type.
-        registeredClass.callbacks.forEach(function(callback) {
-          callback(element);
-        });
+        for (var j = 0, m = registeredClass.callbacks.length; j < m; j++) {
+          registeredClass.callbacks[j](element);
+        }
 
         if (registeredClass.widget) {
           // Assign per element instance for control over API
-          element[jsClass] = instance;
+          element[registeredClass.className] = instance;
         }
       } else {
         throw new Error(
@@ -127,6 +138,35 @@ var componentHandler = (function() {
       ev.initEvent('mdl-componentupgraded', true, true);
       element.dispatchEvent(ev);
     }
+  }
+
+  /**
+   * Upgrades a specific list of elements rather than all in the DOM.
+   * @param {HTMLElement | [HTMLElement] | NodeList | HTMLCollection} elements
+   * The elements we wish to upgrade.
+   * @param {boolean} recursive If set to true, recursively upgrade all elements
+   * underneath. Default is false.
+   */
+  function upgradeElementsInternal(elements, recursive) {
+    if (!Array.isArray(elements)) {
+      if (typeof elements.item === 'function') {
+        // Convert to Array.
+        elements = Array.prototype.slice.call(elements);
+      } else {
+        // Make it an Array.
+        elements = [elements];
+      }
+    }
+    recursive = recursive || false;
+
+    elements.forEach(function (element) {
+      if (element instanceof HTMLElement) {
+        if (recursive) {
+          upgradeElementsInternal(element.children, recursive);
+        }
+        upgradeElementInternal(element);
+      }
+    });
   }
 
   /**
@@ -182,20 +222,12 @@ var componentHandler = (function() {
   }
 
   /**
-   * Upgrades all registered components found under the given root node in the
-   * current DOM. This is automatically called on window load.
-   *
-   * @param {!Element | document} rootNode The element node under which the
-   * upgrade would occur.
+   * Upgrades all registered components found in the current DOM. This is
+   * automatically called on window load.
    */
-  function upgradeAllRegisteredInternal(rootNode) {
-    if (rootNode === undefined) {
-      rootNode = document;
-    } else if (!(rootNode instanceof Element || rootNode === document)) {
-      throw new Error('Invalid argument provided to upgrade MDL nodes.');
-    }
+  function upgradeAllRegisteredInternal() {
     for (var n = 0; n < registeredComponents_.length; n++) {
-      upgradeDomInternal(registeredComponents_[n].className, undefined, rootNode);
+      upgradeDomInternal(registeredComponents_[n].className);
     }
   }
 
@@ -267,6 +299,7 @@ var componentHandler = (function() {
   return {
     upgradeDom: upgradeDomInternal,
     upgradeElement: upgradeElementInternal,
+    upgradeElements: upgradeElementsInternal,
     upgradeAllRegistered: upgradeAllRegisteredInternal,
     registerUpgradedCallback: registerUpgradedCallbackInternal,
     register: registerInternal,
