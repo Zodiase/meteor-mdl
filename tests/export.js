@@ -4,6 +4,7 @@ Tinytest.add('MDl/exposure-basic', function (test) {
 	
 	test.instanceOf(componentHandler.upgradeDom,               Function);
 	test.instanceOf(componentHandler.upgradeElement,           Function);
+	test.instanceOf(componentHandler.upgradeElements,          Function);
 	test.instanceOf(componentHandler.upgradeAllRegistered,     Function);
 	test.instanceOf(componentHandler.registerUpgradedCallback, Function);
 	test.instanceOf(componentHandler.register,                 Function);

@@ -52,10 +52,10 @@ var measure = function (speedTestVolume, sampleOverTimes, volumeRun) {
 	};
 };
 
-Tinytest.add('patcher/blaze/upgradeStyleSpeed-horizontal', function (test) {
+Tinytest.add('patcher/blaze/upgradeStyleSpeed-auto-horizontal', function (test) {
 	if (!speedTest) return;
 	test.notEqual(sampleOverTimes, 0);
-	console.log('patcher/blaze/upgradeStyleSpeed-horizontal');
+	console.log('patcher/blaze/upgradeStyleSpeed-auto-horizontal');
 	
 	var $sandbox = $('<div id="test-sandbox">').appendTo(document.body);
 	var myEnv = MDl.envConfig.patchers.blaze;
@@ -80,10 +80,10 @@ Tinytest.add('patcher/blaze/upgradeStyleSpeed-horizontal', function (test) {
 	$sandbox.remove();
 });
 
-Tinytest.add('patcher/blaze/upgradeStyleSpeed-vertical', function (test) {
+Tinytest.add('patcher/blaze/upgradeStyleSpeed-auto-vertical', function (test) {
 	if (!speedTest) return;
 	test.notEqual(sampleOverTimes, 0);
-	console.log('patcher/blaze/upgradeStyleSpeed-vertical');
+	console.log('patcher/blaze/upgradeStyleSpeed-auto-vertical');
 	
 	var $sandbox = $('<div id="test-sandbox">').appendTo(document.body);
 	var myEnv = MDl.envConfig.patchers.blaze;
@@ -106,5 +106,94 @@ Tinytest.add('patcher/blaze/upgradeStyleSpeed-vertical', function (test) {
 		});
 		console.log(styleName, styleTime);
 	}
+	$sandbox.remove();
+});
+
+Tinytest.add('patcher/blaze/upgradeStyleSpeed-batch-horizontal', function (test) {
+	if (!speedTest) return;
+	test.notEqual(sampleOverTimes, 0);
+	console.log('patcher/blaze/upgradeStyleSpeed-batch-horizontal');
+	
+	var $sandbox = $('<div id="test-sandbox">').appendTo(document.body);
+	var myEnv = MDl.envConfig.patchers.blaze;
+	
+	myEnv.setUpgradeStyle('none');
+	appendTarget = $sandbox;
+	styleTime = measure(speedTestVolume, sampleOverTimes, function (elements) {
+		// Append.
+		for (var i = 0, n = elements.length, element; i < n; i++) {
+			element = elements[i];
+			appendTarget.append(element);
+		}
+		MDl.componentHandler.upgradeAllRegistered();
+		// Remove.
+		for (var i = 0, n = elements.length, element; i < n; i++) {
+			element = elements[i];
+			element.remove();
+		}
+	});
+	console.log('upgradeAllRegistered', styleTime);
+	
+	styleTime = measure(speedTestVolume, sampleOverTimes, function (elements) {
+		// Append.
+		for (var i = 0, n = elements.length, element; i < n; i++) {
+			element = elements[i];
+			appendTarget.append(element);
+		}
+		MDl.componentHandler.upgradeElements($sandbox);
+		// Remove.
+		for (var i = 0, n = elements.length, element; i < n; i++) {
+			element = elements[i];
+			element.remove();
+		}
+	});
+	console.log('upgradeElements', styleTime);
+	
+	$sandbox.remove();
+});
+
+Tinytest.add('patcher/blaze/upgradeStyleSpeed-batch-vertical', function (test) {
+	if (!speedTest) return;
+	test.notEqual(sampleOverTimes, 0);
+	console.log('patcher/blaze/upgradeStyleSpeed-batch-vertical');
+	
+	var $sandbox = $('<div id="test-sandbox">').appendTo(document.body);
+	var myEnv = MDl.envConfig.patchers.blaze;
+	
+	myEnv.setUpgradeStyle('none');
+	appendTarget = $sandbox;
+	styleTime = measure(speedTestVolume, sampleOverTimes, function (elements) {
+		// Append.
+		for (var i = 0, n = elements.length, element; i < n; i++) {
+			element = elements[i];
+			appendTarget.append(element);
+			appendTarget = element;
+		}
+		MDl.componentHandler.upgradeAllRegistered();
+		// Remove.
+		for (var i = elements.length - 1, element; i >= 0; i--) {
+			element = elements[i];
+			element.remove();
+		}
+	});
+	console.log('upgradeAllRegistered', styleTime);
+	
+	appendTarget = $sandbox;
+	styleTime = measure(speedTestVolume, sampleOverTimes, function (elements) {
+		// Append.
+		for (var i = 0, n = elements.length, element; i < n; i++) {
+			element = elements[i];
+			appendTarget.append(element);
+			appendTarget = element;
+		}
+		MDl.componentHandler.upgradeElements($sandbox);
+		// Remove.
+		for (var i = elements.length - 1, element; i >= 0; i--) {
+			element = elements[i];
+			element.remove();
+		}
+	});
+	console.log('upgradeElements', styleTime);
+	
 	$sandbox.remove();
 });
