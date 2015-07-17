@@ -16,32 +16,34 @@ EnvConfig['blazeFix'] = true;
 var myEnv = EnvConfig['patchers']['blaze'] = {};
 
 var handleMutation = function (mutation) {
-	switch (mutation.type) {
-		case 'attributes':
-			//! Try to upgrade this element.
-			break;
-		case 'characterData':
-			// Ignore character changes.
-			break;
-		case 'childList':
-			// Upgrade the new children.
-			if (mutation.addedNodes.length > 0 && mutation.target instanceof Element) {
-				componentHandler.upgradeElements(mutation.target, true);
-			}
-			break;
-		default:
-			throw new Error('Invalid type of mutation.');
-	}
+  switch (mutation.type) {
+    case 'attributes':
+      //! Try to upgrade this element.
+      break;
+    case 'characterData':
+      // Ignore character changes.
+      break;
+    case 'childList':
+      // Upgrade the new children.
+      if (mutation.addedNodes.length > 0 && mutation.target instanceof Element) {
+        componentHandler.upgradeElements(mutation.target, true);
+      }
+      break;
+    default:
+      throw new Error('Invalid type of mutation.');
+  }
 };
 
 var mutationObserverBehaviors = {
-	'fullUpgrade': function (mutations, observer) {
-		componentHandler.upgradeAllRegistered();
-	},
-	'mutationOnly': function (mutations, observer) {
-		mutations.forEach(handleMutation);
-	},
-	'none': function (mutations, observer) {}
+  'fullUpgrade': function (mutations, observer) {
+    componentHandler.upgradeAllRegistered();
+  },
+  'mutationOnly': function (mutations, observer) {
+    for (var i = 0, n = mutations.length; i < n; i++) {
+      handleMutation(mutations[i]);
+    }
+  },
+  'none': function (mutations, observer) {}
 }
 // After some testing, seems like 'fullUpgrade' tends to be more efficient than 'mutationOnly'.
 , activeMutationObserverBehaviorName = 'mutationOnly'
@@ -49,34 +51,34 @@ var mutationObserverBehaviors = {
 
 // Add public method for switching the mutation observer's behavior.
 myEnv.setUpgradeStyle = function (name) {
-	if (Object.prototype.hasOwnProperty.call(mutationObserverBehaviors, name)) {
-		activeMutationObserverBehaviorName = name;
-		activeMutationObserverBehavior = mutationObserverBehaviors[name];
-	}
+  if (Object.prototype.hasOwnProperty.call(mutationObserverBehaviors, name)) {
+    activeMutationObserverBehaviorName = name;
+    activeMutationObserverBehavior = mutationObserverBehaviors[name];
+  }
 };
 myEnv.getUpgradeStyle = function () {
-	return activeMutationObserverBehaviorName;
+  return activeMutationObserverBehaviorName;
 };
 
 var observerLocked = false;
 var observer = new MutationObserver(function(mutations, observer) {
-	// Use the lock to ignore mutations happened during the process of an update.
-	if (observerLocked) return;
-	observerLocked = true;
-	
-	activeMutationObserverBehavior(mutations, observer);
-	
-	observerLocked = false;
+  // Use the lock to ignore mutations happened during the process of an update.
+  if (observerLocked) return;
+  observerLocked = true;
+  
+  activeMutationObserverBehavior(mutations, observer);
+  
+  observerLocked = false;
 }), observing = false, observeConfig = {
-		childList: true,
-		attributes: true,
-		characterData: false,
-		subtree: true
-// 		attributeOldValue: false,
-// 		characterDataOldValue: false
-// 		attributeFilter: []
-	};
+    childList: true,
+    attributes: true,
+    characterData: false,
+    subtree: true
+//     attributeOldValue: false,
+//     characterDataOldValue: false
+//     attributeFilter: []
+  };
 
 Meteor.startup(function () {
-	observer.observe(document.body, observeConfig);
+  observer.observe(document.body, observeConfig);
 });
