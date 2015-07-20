@@ -13,10 +13,10 @@ tpl = Template[tplname]
 
 Template["#{tplname}_bad"].events
   'click .mdl-layout__tab': (event, template) ->
-    console.log('click');
-    return true;
+    console.log('click')
+    return true
 
 Template["#{tplname}_good"].events
   'click .mdl-layout__tab': (event, template) ->
-    console.log('click');
-    return true;
+    console.log('click')
+    return true
