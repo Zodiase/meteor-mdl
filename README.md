@@ -30,6 +30,10 @@ Install
 $ meteor add zodiase:mdl
 ```
 
+Known Issues
+------------------------------------------------------------------------------
+* ***Do not use MDL components at the top level of any templates or template event handlers may not work correctly.***
+
 Change Log
 ------------------------------------------------------------------------------
 * v1.0.0-4
