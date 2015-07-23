@@ -26,7 +26,7 @@ var handleMutation = function (mutation) {
     case 'childList':
       // Upgrade the new children.
       if (mutation.addedNodes.length > 0 && mutation.target instanceof Element) {
-        componentHandler.upgradeElements(mutation.target, true);
+        componentHandler.upgradeElements(mutation.target);
       }
       break;
     default:

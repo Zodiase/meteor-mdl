@@ -36,6 +36,9 @@ Known Issues
 
 Change Log
 ------------------------------------------------------------------------------
+* v1.0.1
+	* Updated MDl to v1.0.1.
+	* Minor performance tweaks.
 * v1.0.0-4
 	* Updated `material.js` with another custom build, adding the ability to do `componentHandler.upgradeAllRegistered(rootNode)`. Check out [my MDL fork](https://github.com/Zodiase/material-design-lite) for details.
 	* Added a namespace `MDl` while maintaining `componentHandler` available globally. You can also use `Mdl.componentHandler` if it looks better.
