@@ -46,7 +46,7 @@ var mutationObserverBehaviors = {
   'none': function (mutations, observer) {}
 }
 // After some testing, seems like 'fullUpgrade' tends to be more efficient than 'mutationOnly'.
-, activeMutationObserverBehaviorName = 'mutationOnly'
+, activeMutationObserverBehaviorName = 'fullUpgrade'
 , activeMutationObserverBehavior = mutationObserverBehaviors[activeMutationObserverBehaviorName];
 
 // Add public method for switching the mutation observer's behavior.
