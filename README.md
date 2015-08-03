@@ -46,6 +46,8 @@ Known Issues
 
 Change Log
 ------------------------------------------------------------------------------
+* v1.0.2-1
+  * Included Material Icons Typeface file in the package so your app can go completely offline.
 * v1.0.2
 	* Updated MDl to v1.0.2.
 	* Converted demos into integration tests.
