@@ -15,10 +15,10 @@ Package.onUse(function (api) {
 	
 	// Add content to head.
 	api.use('templating');
-	api.addFiles('head.html', 'client');
 	
 	api.addFiles([
 		'material.css',
+		'material-icons.css',
 		'envConfigs.js',
 		'material.js',
 		'export.js'
