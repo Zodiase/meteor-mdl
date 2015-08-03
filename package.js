@@ -13,9 +13,6 @@ Package.describe({
 Package.onUse(function (api) {
 	api.versionsFrom('1.1.0.2');
 	
-	// Add content to head.
-	api.use('templating');
-	
 	api.addFiles([
 		'material.css',
 		'material-icons.css',
