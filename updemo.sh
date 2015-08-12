@@ -7,9 +7,9 @@ NC='\033[0m' # No Color
 
 cpath="$(pwd)"
 
-echo -e "Updating projects under ${cpath}/demo.\n"
+echo -e "Updating projects under ${cpath}/integration-tests.\n"
 
-for path in ./demo/*; do
+for path in ./integration-tests/*; do
 	[ -d "${path}" ] || continue # if not a directory, skip
 	dirname="$(basename "${path}")"
 	echo -e "Updating ${RED}${dirname}${NC}.\n"
