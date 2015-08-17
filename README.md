@@ -46,6 +46,10 @@ Known Issues
 
 Change Log
 ------------------------------------------------------------------------------
+* v1.0.2-2
+  * Improved support for webkit browsers.
+  * Added TrueType font for Safari.
+  * Fixed blaze patcher for Safari.
 * v1.0.2-1
   * Included Material Icons Typeface file in the package so your app can go completely offline.
 * v1.0.2
@@ -70,17 +74,17 @@ Change Log
 
 Content
 ------------------------------------------------------------------------------
-| File            | Description                                     |
-| --------------- | ----------------------------------------------- |
-| package.js      | package descriptions.                           |
-| head.html       | used for adding fonts stylesheet to html head.  |
-| material.css    | css file built straight from MDL.               |
-| material.js     | custom built for exporting componentHandler.    |
-| envConfigs.js   | defines global vars shared among other scripts. |
-| export.js       | used for exporting componentHandler.            |
-| export-tests.js | tests of exporting.                             |
-| patchers/*      | helpers for adding more MDL's auto-upgrades.    |
-| demo/*          | demos.                                          |
+| File                | Description                                     |
+| ------------------- | ----------------------------------------------- |
+| package.js          | package descriptions.                           |
+| material.css        | css file built straight from MDL.               |
+| material-icons.css  | css file built straight from MDL.               |
+| material.js         | custom built for exporting componentHandler.    |
+| envConfigs.js       | defines global vars shared among other scripts. |
+| export.js           | used for exporting componentHandler.            |
+| patchers/*          | helpers for adding more MDL's auto-upgrades.    |
+| tests/*             | unit tests.                                     |
+| integration-tests/* | integration-tests/demos.                        |
 
 Versioning
 ------------------------------------------------------------------------------
