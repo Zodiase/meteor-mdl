@@ -10,7 +10,7 @@
 /*global componentHandler:true*/
 
 var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
-if (typeof MutationObserver !== 'function') return;
+if (!MutationObserver) return;
 
 EnvConfig['blazeFix'] = true;
 var myEnv = EnvConfig['patchers']['blaze'] = {};
