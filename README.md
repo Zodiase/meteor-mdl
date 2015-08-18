@@ -46,6 +46,8 @@ Known Issues
 
 Change Log
 ------------------------------------------------------------------------------
+* v1.0.3
+  * Updated MDl to v1.0.3.
 * v1.0.2-2
   * Improved support for webkit browsers.
   * Added TrueType font for Safari.
