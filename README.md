@@ -30,9 +30,7 @@ Features
 			* `'mutationOnly'` uses `componentHandler.upgradeElements(mutation.target)` on mutations when any mutation is observed.
 			* `'none'` does nothing.
 * If you don't want auto-upgrading, turn it off with:
-	```JavaScript
-	if (MDl.envConfig['blazeFix']) MDl.envConfig.patchers.blaze.setUpgradeStyle('none');
-	```
+	* `if (MDl.envConfig['blazeFix']) MDl.envConfig.patchers.blaze.setUpgradeStyle('none');`
 * Supports [Iron:Router](https://github.com/iron-meteor/iron-router).*
 
 Install
