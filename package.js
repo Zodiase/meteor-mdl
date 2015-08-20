@@ -1,6 +1,6 @@
 Package.describe({
 	name: 'zodiase:mdl',
-	version: '1.0.3',
+	version: '1.0.4',
 	// Brief, one-line summary of the package.
 	summary: 'A wrapper package for Google\'s Material Design Lite.',
 	// URL to the Git repository containing the source code for this package.
@@ -26,8 +26,7 @@ Package.onUse(function (api) {
 	], 'client');
 	// Patchers.
 	api.addFiles([
-		'patchers/blaze.js',
-		'patchers/iron-router.js'
+		'patchers/blaze.js'
 	], 'client');
 });
 
