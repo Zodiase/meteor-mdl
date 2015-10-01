@@ -52,6 +52,8 @@ Known Issues
 
 Change Log
 ------------------------------------------------------------------------------
+* v1.0.5
+	* Updated MDl to v1.0.5.
 * v1.0.4
 	* Updated MDl to v1.0.4.
 	* Deprecated the Iron:Router patcher.
