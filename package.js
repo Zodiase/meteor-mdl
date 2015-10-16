@@ -19,7 +19,6 @@ Package.onUse(function (api) {
     ]); 
     
     api.addFiles([
-        'material.css',
         'material-icons.css',
         'envConfigs.js',
         'material.js',
@@ -73,6 +72,7 @@ Package.onUse(function (api) {
     ];
 
     scssFiles = prepandPathToFiles(scssFiles, 'sass/');
+
     api.addFiles(scssFiles, 'client');
     api.addFiles('material.scss', 'client');
 });
@@ -86,7 +86,6 @@ Package.onTest(function (api) {
         'tests/patcher-blaze.js'
     ], 'client');
 });
-
 
 function prepandPathToFiles(files, path) {
     return files.map(function(file) {
