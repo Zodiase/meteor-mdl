@@ -1,0 +1,51 @@
+/**
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* Material Design Lite */
+
+// Variables and mixins
+@import "{zodiase:mdl}/sass/variables";
+@import "{zodiase:mdl}/sass/mixins";
+
+// Resets and dependencies
+@import "{zodiase:mdl}/sass/resets";
+@import "{zodiase:mdl}/sass/typography";
+
+// Components
+@import "{zodiase:mdl}/sass/palette";
+@import "{zodiase:mdl}/sass/ripple";
+@import "{zodiase:mdl}/sass/animation";
+@import "{zodiase:mdl}/sass/badge";
+@import "{zodiase:mdl}/sass/button";
+@import "{zodiase:mdl}/sass/card";
+@import "{zodiase:mdl}/sass/checkbox";
+@import "{zodiase:mdl}/sass/data-table";
+@import "{zodiase:mdl}/sass/mega_footer";
+@import "{zodiase:mdl}/sass/mini_footer";
+@import "{zodiase:mdl}/sass/icon-toggle";
+@import "{zodiase:mdl}/sass/menu";
+@import "{zodiase:mdl}/sass/progress";
+@import "{zodiase:mdl}/sass/layout";
+@import "{zodiase:mdl}/sass/radio";
+@import "{zodiase:mdl}/sass/slider";
+@import "{zodiase:mdl}/sass/snackbar";
+@import "{zodiase:mdl}/sass/spinner";
+@import "{zodiase:mdl}/sass/switch";
+@import "{zodiase:mdl}/sass/tabs";
+@import "{zodiase:mdl}/sass/textfield";
+@import "{zodiase:mdl}/sass/tooltip";
+@import "{zodiase:mdl}/sass/shadow";
+@import "{zodiase:mdl}/sass/grid";
