@@ -1,5 +1,8 @@
 Change Log
 ------------------------------------------------------------------------------
+* v1.0.6_1
+	* Revised the method used to include material icons fonts. Now they won't be loaded unless browser decides to. Since this change requires `api.addAssets` which is only available after Meteor 1.2, release dependency is updated.
+	* Won't be compatible with Meteor release prior to 1.2.1.
 * v1.0.6
 	* Updated MDl to v1.0.6.
 * v1.0.5
