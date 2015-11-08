@@ -18,6 +18,12 @@ function println (data) {
 	process.stdout.write(data + '\n');
 }
 
+var pathToPackageRoot = '../';
+var assetRootPath = '/packages/zodiase_mdl/';
+var mergedCssFilePath = 'material-icons-nofont.css';
+var finalCssFilePath = 'material-icons.css';
+var packageFilePath = 'package.js';
+
 var userAgents = [
 	// OS X El Capitan - Chrome
 	'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36',
@@ -38,6 +44,8 @@ var mergedAST = {
 		rules: []
 	}
 };
+
+var assets = [];
 
 var MatchDeclaration = function (rule, declaration) {
 	var result = false;
@@ -88,7 +96,7 @@ var AddFontFace = function (stylesheet, fontFace) {
 	//else
 	
 	// Font family found.
-	println(fontFamily);
+	println('Font family: ' + fontFamily);
 	
 	// Merge if a font face with the same font family exists.
 	var mergingRule = FindFontFace(stylesheet.stylesheet.rules, fontFamily);
@@ -140,7 +148,7 @@ var AddRule = function (stylesheet, rule) {
 	var selector = JSON.stringify(rule.selectors);
 	
 	// selector found.
-	println(selector);
+	println('Selector: ' + selector);
 	
 	// Merge if a font face with the same font family exists.
 	var mergingRule = FindRule(stylesheet.stylesheet.rules, selector);
@@ -163,6 +171,7 @@ var AddRule = function (stylesheet, rule) {
 
 var mainQueue = pqueue([
 	function DownloadCss_Start (queue, heap) {
+  	println('Downloading CSS files with different user agents.');
 		heap.index = 0;
 		heap.options = {
 			"hostname": "fonts.googleapis.com",
@@ -182,12 +191,17 @@ var mainQueue = pqueue([
 		//else
 		queue.pause();
 		heap.options.headers['User-Agent'] = userAgents[heap.index];
+		
+		println('Downloading CSS file with user agent: ');
+		println(heap.options.headers['User-Agent']);
+		
 		https.get(heap.options, function (response) {
 			var allData = "";
 			response.on('data', function(dataChunk) {
 				// Append data
 				allData += dataChunk;
 			}).on("end", function () {
+  			println('Download complete.');
 				heap.rawData = allData;
 				queue.resume();
 			});
@@ -197,10 +211,10 @@ var mainQueue = pqueue([
 		});
 	},
 	function DownloadCss_Loop (queue, heap) {
+  	println('Merging CSS.');
 		_ast = css.parse(heap.rawData);
 		_ast.stylesheet.rules.forEach(function (rule, index) {
-			print('Rule type: ');
-			println(rule.type);
+			println('Rule type: ' + rule.type);
 			switch (rule.type) {
 				case 'font-face':
 					AddFontFace(mergedAST, rule);
@@ -210,18 +224,25 @@ var mainQueue = pqueue([
 					break;
 			}
 		});
+		println('Merge complete.');
 		
 		heap.index++;
 		queue.pc.goto(queue.pc.locate("DownloadCss_Get"));
 	},
 	function DownloadCss_End (queue, heap) {
+  	println('Download CSS files complete.');
 		heap.mergedCss = css.stringify(mergedAST);
-		//println(heap.mergedCss);
-		fs.writeFile('../material-icons-nofont.css', heap.mergedCss, {
-			encoding: 'utf8'
-		});
+	},
+	function WriteCssFile (queue, heap) {
+  	var filePath = path.resolve(__dirname, pathToPackageRoot, mergedCssFilePath);
+		
+		println('Writing merged CSS to file: ');
+		println(filePath + '.');
+		
+		fs.writeFile(filePath, heap.mergedCss, {encoding: 'utf8'});
 	},
 	function DownloadUrls_Start (queue, heap) {
+  	println('Downloading resources referenced by url.');
 		heap.urls = {};
 	},
 	function DownloadUrls_Get (queue, heap) {
@@ -235,21 +256,24 @@ var mainQueue = pqueue([
 		var url = urlMatch[1];
 		var protocol = urlMatch[2];
 		var basename = path.basename(url);
-		var extname = path.extname(basename);
-		var filePath = '../fonts/material-icons' + extname;
+		var filePath = 'fonts/' + basename;
+		
+		assets.push(filePath);
 		
 		queue.pause();
 		httper[protocol].get(url, function (response) {
-			var file = fs.createWriteStream(filePath);
+  		var absFilePath = path.resolve(__dirname, pathToPackageRoot, filePath);
+  		var assetFilePath = path.resolve(assetRootPath, filePath);
+  		
+  		println('Downloading font file ' + url);
+  		println('to ' + absFilePath + '.');
+  		
+			var file = fs.createWriteStream(absFilePath);
 			file.on('finish', function () {
-				var fontData = fs.readFileSync(filePath);
-				
-				var base64 = dataurl.convert({
-					data: fontData,
-					mimetype: ''
-				});
-				
-				heap.mergedCss = heap.mergedCss.replace(segment, 'url(' + base64 + ')');
+  			
+  			println('Download complete.');
+  			
+				heap.mergedCss = heap.mergedCss.replace(segment, 'url(' + assetFilePath + ')');
 				
 				queue.resume();
 			});
@@ -268,10 +292,22 @@ var mainQueue = pqueue([
 		queue.pc.goto(queue.pc.locate("DownloadUrls_Get"));
 	},
 	function DownloadUrls_End (queue, heap) {
-		//println(heap.mergedCss);
-		fs.writeFile('../material-icons.css', heap.mergedCss, {
-			encoding: 'utf8'
-		});
+  	println('Download resources complete.');
+	},
+	function WriteFinalCssFile (queue, heap) {
+  	var filePath = path.resolve(__dirname, pathToPackageRoot, finalCssFilePath);
+		
+		println('Writing final CSS to file: ');
+		println(filePath + '.');
+		
+		fs.writeFile(filePath, heap.mergedCss, {encoding: 'utf8'});
+	},
+	function AddAssetsToPackage (queue, heap) {
+  	var filePath = path.resolve(__dirname, pathToPackageRoot, packageFilePath);
+  	var packageFile = fs.readFileSync(filePath, {encoding: 'utf8'});
+  	var assetList = JSON.stringify(assets);
+  	packageFile = packageFile.replace(/\/\/\/>>>>ASSETS((.|\n)*?)\/\/\/<<<<ASSETS/g, '///>>>>ASSETS\n  assets = ' + assetList + ';\n///<<<<ASSETS');
+  	fs.writeFileSync(filePath, packageFile, {encoding: 'utf8'});
 	},
 	pqueue.HALT
 ], "0").boot();

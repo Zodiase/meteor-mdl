@@ -11,7 +11,14 @@ Package.describe({
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom('1.1.0.2');
+  api.versionsFrom('1.2.1');
+
+  var assets = [];
+///>>>>ASSETS
+  assets = ["fonts/2fcrYFNaTjcS6g4U3t-Y5UEw0lE80llgEseQY3FEmqw.woff2","fonts/2fcrYFNaTjcS6g4U3t-Y5ewrjPiaoEww8AihgqWRJAo.woff","fonts/2fcrYFNaTjcS6g4U3t-Y5bbKic1PW3nceB3q24YFOMg.ttf"];
+///<<<<ASSETS
+
+  api.addAssets(assets, 'client');
 
   api.addFiles([
     'material.css',
