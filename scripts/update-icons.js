@@ -263,7 +263,6 @@ var mainQueue = pqueue([
 		queue.pause();
 		httper[protocol].get(url, function (response) {
   		var absFilePath = path.resolve(__dirname, pathToPackageRoot, filePath);
-  		var assetFilePath = path.resolve(assetRootPath, filePath);
   		
   		println('Downloading font file ' + url);
   		println('to ' + absFilePath + '.');
@@ -273,7 +272,7 @@ var mainQueue = pqueue([
   			
   			println('Download complete.');
   			
-				heap.mergedCss = heap.mergedCss.replace(segment, 'url(' + assetFilePath + ')');
+				heap.mergedCss = heap.mergedCss.replace(segment, 'url(' + filePath + ')');
 				
 				queue.resume();
 			});

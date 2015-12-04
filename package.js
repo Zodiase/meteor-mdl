@@ -1,6 +1,6 @@
 Package.describe({
   name: 'zodiase:mdl',
-  version: '1.0.6_1',
+  version: '1.0.6_2',
   // Brief, one-line summary of the package.
   summary: 'A wrapper package for Google\'s Material Design Lite.',
   // URL to the Git repository containing the source code for this package.
@@ -15,7 +15,7 @@ Package.onUse(function (api) {
 
   var assets = [];
 ///>>>>ASSETS
-  assets = ["fonts/2fcrYFNaTjcS6g4U3t-Y5UEw0lE80llgEseQY3FEmqw.woff2","fonts/2fcrYFNaTjcS6g4U3t-Y5ewrjPiaoEww8AihgqWRJAo.woff","fonts/2fcrYFNaTjcS6g4U3t-Y5bbKic1PW3nceB3q24YFOMg.ttf"];
+  assets = ["fonts/2fcrYFNaTjcS6g4U3t-Y5UEw0lE80llgEseQY3FEmqw.woff2","fonts/2fcrYFNaTjcS6g4U3t-Y5ewrjPiaoEww8AihgqWRJAo.woff","fonts/2fcrYFNaTjcS6g4U3t-Y5RV6cRhDpPC5P4GCEJpqGoc.woff"];
 ///<<<<ASSETS
 
   api.addAssets(assets, 'client');
