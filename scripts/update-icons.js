@@ -305,7 +305,7 @@ var mainQueue = pqueue([
   	var filePath = path.resolve(__dirname, pathToPackageRoot, packageFilePath);
   	var packageFile = fs.readFileSync(filePath, {encoding: 'utf8'});
   	var assetList = JSON.stringify(assets);
-  	packageFile = packageFile.replace(/\/\/\/>>>>ASSETS((.|\n)*?)\/\/\/<<<<ASSETS/g, '///>>>>ASSETS\n  assets = ' + assetList + ';\n///<<<<ASSETS');
+  	packageFile = packageFile.replace(/\/\/\/>>>>FONTASSETS((.|\n)*?)\/\/\/<<<<FONTASSETS/g, '///>>>>FONTASSETS\n  fontAssets = ' + assetList + ';\n///<<<<FONTASSETS');
   	fs.writeFileSync(filePath, packageFile, {encoding: 'utf8'});
 	},
 	pqueue.HALT

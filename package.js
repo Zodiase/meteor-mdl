@@ -13,16 +13,17 @@ Package.describe({
 Package.onUse(function (api) {
   api.versionsFrom('1.2.1');
 
-  var assets = [];
-///>>>>ASSETS
-  assets = ["fonts/2fcrYFNaTjcS6g4U3t-Y5UEw0lE80llgEseQY3FEmqw.woff2","fonts/2fcrYFNaTjcS6g4U3t-Y5ewrjPiaoEww8AihgqWRJAo.woff","fonts/2fcrYFNaTjcS6g4U3t-Y5RV6cRhDpPC5P4GCEJpqGoc.woff"];
-///<<<<ASSETS
+  // Add fonts for material icons.
+  var fontAssets = [];
+///>>>>FONTASSETS
+  fontAssets = ["fonts/2fcrYFNaTjcS6g4U3t-Y5UEw0lE80llgEseQY3FEmqw.woff2","fonts/2fcrYFNaTjcS6g4U3t-Y5ewrjPiaoEww8AihgqWRJAo.woff","fonts/2fcrYFNaTjcS6g4U3t-Y5RV6cRhDpPC5P4GCEJpqGoc.woff"];
+///<<<<FONTASSETS
+  api.addAssets(fontAssets, 'client');
+  api.addFiles('material-icons.css', 'client');
 
-  api.addAssets(assets, 'client');
-
+  // Main files.
   api.addFiles([
     'material.css',
-    'material-icons.css',
     'envConfigs.js',
     'material.js',
     'export.js'
