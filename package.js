@@ -12,6 +12,44 @@ Package.describe({
 
 Package.onUse(function (api) {
   api.versionsFrom('1.2.1');
+  var npmPath = Npm.require('path');
+  var npmFs = Npm.require('fs');
+
+  // Initialize variables.
+  var color_primary_default = 'indigo', color_accent_default = 'pink';
+  var color_primary = color_primary_default, color_accent = color_accent_default;
+  var settingsFileName = 'zodiase-mdl.json';
+
+  // Load "zodiase-mdl.json" from app's root directory.
+  var appRoot = process.cwd();
+  var settingsFilePath = npmPath.join(appRoot, settingsFileName);
+  try {
+    var settingsFileStats = npmFs.statSync(settingsFilePath);
+    if (!settingsFileStats.isFile()) throw new Error('Settings file not found.');
+    var settingsFileData = npmFs.readFileSync(settingsFilePath);
+    console.log('MDL settings found', settingsFilePath);
+    var settings = null;
+    try {
+      settings = JSON.parse(settingsFileData);
+    } catch (error) {
+      console.error('Could not parse file.', error);
+      throw error;
+    }
+    console.info('MDL settings loaded', settings);
+
+    // Read theme settings.
+    if (settings.hasOwnProperty('theme')) {
+      var theme = settings.theme;
+      if (theme.hasOwnProperty('primary')) {
+        color_primary = npmPath.basename(theme.primary);
+      }
+      if (theme.hasOwnProperty('accent')) {
+        color_accent = npmPath.basename(theme.accent);
+      }
+    }
+  } catch (error) {
+    // Settings file not found.
+  }
 
   // Add fonts for material icons.
   var fontAssets = [];
@@ -25,8 +63,10 @@ Package.onUse(function (api) {
   api.addFiles('envConfigs.js', 'client');
   // Load MDL files from npm directory.
   var mdlPath = '.npm/package/node_modules/material-design-lite/dist';
+  var themeFileName = getThemeFileName(color_primary, color_accent);
+  console.info('MDL Theme:', color_primary, color_accent);
   var mdlFiles = [
-  	'material.css',
+  	themeFileName,
   	'material.js'
   ];
   api.addFiles(prepandPathToFiles(mdlFiles, mdlPath), 'client');
@@ -53,10 +93,13 @@ Package.onTest(function (api) {
   ], 'client');
 });
 
+function getThemeFileName(primary, accent) {
+  return 'material.' + primary + '-' + accent + '.min.css';
+}
 function prepandPathToFiles(files, path) {
-  var _path = Npm.require('path');
+  var npmPath = Npm.require('path');
   return files.map(function(file) {
-    return _path.join(path, file);
+    return npmPath.join(path, file);
   });
 }
 
