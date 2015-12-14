@@ -21,17 +21,22 @@ Package.onUse(function (api) {
   api.addAssets(fontAssets, 'client');
   api.addFiles('material-icons.css', 'client');
 
-  // Main files.
-  api.addFiles([
-    'material.css',
-    'envConfigs.js',
-    'material.js',
-    'export.js'
-  ], 'client');
+  // Add main files.
+  api.addFiles('envConfigs.js', 'client');
+  // Load MDL files from npm directory.
+  var mdlPath = '.npm/package/node_modules/material-design-lite/dist';
+  var mdlFiles = [
+  	'material.css',
+  	'material.js'
+  ];
+  api.addFiles(prepandPathToFiles(mdlFiles, mdlPath), 'client');
+  api.addFiles('export.js', 'client');
+
   api.export([
     "componentHandler",
     "MDl"
   ], 'client');
+
   // Patchers.
   api.addFiles([
     'patchers/blaze.js'
@@ -46,4 +51,15 @@ Package.onTest(function (api) {
     'tests/export.js',
     'tests/patcher-blaze.js'
   ], 'client');
+});
+
+function prepandPathToFiles(files, path) {
+  var _path = Npm.require('path');
+  return files.map(function(file) {
+    return _path.join(path, file);
+  });
+}
+
+Npm.depends({
+  'material-design-lite': '1.0.6'
 });
