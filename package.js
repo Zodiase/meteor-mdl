@@ -1,6 +1,6 @@
 Package.describe({
   name: 'zodiase:mdl',
-  version: '1.0.6_2',
+  version: '1.0.6_3',
   // Brief, one-line summary of the package.
   summary: 'A wrapper package for Google\'s Material Design Lite.',
   // URL to the Git repository containing the source code for this package.
@@ -12,6 +12,8 @@ Package.describe({
 
 Package.onUse(function (api) {
   api.versionsFrom('1.2.1');
+  api.use('fourseven:scss@3.4.1');
+  
   var npmPath = Npm.require('path');
   var npmFs = Npm.require('fs');
 
@@ -62,15 +64,23 @@ Package.onUse(function (api) {
   // Add main files.
   api.addFiles('envConfigs.js', 'client');
   // Load MDL files from npm directory.
-  var mdlPath = '.npm/package/node_modules/material-design-lite/dist';
+  var mdlDistPath = 'dist'; // This relies on the symlink.
   var themeFileName = getThemeFileName(color_primary, color_accent);
   console.info('MDL Theme:', color_primary, color_accent);
   var mdlFiles = [
   	themeFileName,
   	'material.js'
   ];
-  api.addFiles(prepandPathToFiles(mdlFiles, mdlPath), 'client');
+  api.addFiles(prepandPathToFiles(mdlFiles, mdlDistPath), 'client');
   api.addFiles('export.js', 'client');
+
+  // Add files to be imported by others.
+  var importFiles = [];
+///>>>>IMPORTFILES
+  importFiles = ["_color-definitions.scss","_functions.scss","_mixins.scss","_variables.scss","material-design-lite-grid.scss","material-design-lite.scss","styleguide.scss","template.scss","animation/_animation.scss","badge/_badge.scss","button/_button.scss","card/_card.scss","checkbox/_checkbox.scss","data-table/_data-table.scss","footer/_mega_footer.scss","footer/_mini_footer.scss","grid/_grid.scss","icon-toggle/_icon-toggle.scss","layout/_layout.scss","menu/_menu.scss","palette/_palette.scss","progress/_progress.scss","radio/_radio.scss","resets/_h5bp.scss","resets/_mobile.scss","resets/_resets.scss","ripple/_ripple.scss","shadow/_shadow.scss","slider/_slider.scss","spinner/_spinner.scss","switch/_switch.scss","tabs/_tabs.scss","textfield/_textfield.scss","tooltip/_tooltip.scss","typography/_typography.scss"];
+///<<<<IMPORTFILES
+  var mdlSrcPath = 'src'; // This relies on the symlink.
+  api.addFiles(prepandPathToFiles(importFiles, mdlSrcPath), 'client', {isImport: true});
 
   api.export([
     "componentHandler",

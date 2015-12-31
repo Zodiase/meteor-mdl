@@ -23,6 +23,9 @@ var assetRootPath = '/packages/zodiase_mdl/';
 var mergedCssFilePath = 'material-icons-nofont.css';
 var finalCssFilePath = 'material-icons.css';
 var packageFilePath = 'package.js';
+var bookmarkName = 'FONTASSETS';
+var variableName = 'fontAssets';
+var matchRegex = new RegExp('\\/\\/\\/>>>>' + bookmarkName + '((.|\\n)*?)\\/\\/\\/<<<<' + bookmarkName + '', 'g');
 
 var userAgents = [
 	// OS X El Capitan - Chrome
@@ -304,8 +307,8 @@ var mainQueue = pqueue([
 	function AddAssetsToPackage (queue, heap) {
   	var filePath = path.resolve(__dirname, pathToPackageRoot, packageFilePath);
   	var packageFile = fs.readFileSync(filePath, {encoding: 'utf8'});
-  	var assetList = JSON.stringify(assets);
-  	packageFile = packageFile.replace(/\/\/\/>>>>FONTASSETS((.|\n)*?)\/\/\/<<<<FONTASSETS/g, '///>>>>FONTASSETS\n  fontAssets = ' + assetList + ';\n///<<<<FONTASSETS');
+  	var assetsJSON = JSON.stringify(assets);
+  	packageFile = packageFile.replace(matchRegex, '///>>>>' + bookmarkName + '\n  ' + variableName + ' = ' + assetsJSON + ';\n///<<<<' + bookmarkName + '');
   	fs.writeFileSync(filePath, packageFile, {encoding: 'utf8'});
 	},
 	pqueue.HALT
