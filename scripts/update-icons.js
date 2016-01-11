@@ -97,10 +97,10 @@ var AddFontFace = function (stylesheet, fontFace) {
 	// If font family not found, ignore this rule.
 	if (fontFamily === null) return;
 	//else
-	
+
 	// Font family found.
 	println('Font family: ' + fontFamily);
-	
+
 	// Merge if a font face with the same font family exists.
 	var mergingRule = FindFontFace(stylesheet.stylesheet.rules, fontFamily);
 	if (mergingRule === null) {
@@ -149,10 +149,10 @@ var AddRule = function (stylesheet, rule) {
 	if (!rule.selectors) return;
 	//else
 	var selector = JSON.stringify(rule.selectors);
-	
+
 	// selector found.
 	println('Selector: ' + selector);
-	
+
 	// Merge if a font face with the same font family exists.
 	var mergingRule = FindRule(stylesheet.stylesheet.rules, selector);
 	if (mergingRule === null) {
@@ -174,7 +174,7 @@ var AddRule = function (stylesheet, rule) {
 
 var mainQueue = pqueue([
 	function DownloadCss_Start (queue, heap) {
-  	println('Downloading CSS files with different user agents.');
+		println('Downloading CSS files with different user agents.');
 		heap.index = 0;
 		heap.options = {
 			"hostname": "fonts.googleapis.com",
@@ -194,17 +194,17 @@ var mainQueue = pqueue([
 		//else
 		queue.pause();
 		heap.options.headers['User-Agent'] = userAgents[heap.index];
-		
+
 		println('Downloading CSS file with user agent: ');
 		println(heap.options.headers['User-Agent']);
-		
+
 		https.get(heap.options, function (response) {
 			var allData = "";
 			response.on('data', function(dataChunk) {
 				// Append data
 				allData += dataChunk;
 			}).on("end", function () {
-  			println('Download complete.');
+				println('Download complete.');
 				heap.rawData = allData;
 				queue.resume();
 			});
@@ -214,7 +214,7 @@ var mainQueue = pqueue([
 		});
 	},
 	function DownloadCss_Loop (queue, heap) {
-  	println('Merging CSS.');
+		println('Merging CSS.');
 		_ast = css.parse(heap.rawData);
 		_ast.stylesheet.rules.forEach(function (rule, index) {
 			println('Rule type: ' + rule.type);
@@ -228,24 +228,24 @@ var mainQueue = pqueue([
 			}
 		});
 		println('Merge complete.');
-		
+
 		heap.index++;
 		queue.pc.goto(queue.pc.locate("DownloadCss_Get"));
 	},
 	function DownloadCss_End (queue, heap) {
-  	println('Download CSS files complete.');
+		println('Download CSS files complete.');
 		heap.mergedCss = css.stringify(mergedAST);
 	},
 	function WriteCssFile (queue, heap) {
-  	var filePath = path.resolve(__dirname, pathToPackageRoot, mergedCssFilePath);
-		
+		var filePath = path.resolve(__dirname, pathToPackageRoot, mergedCssFilePath);
+
 		println('Writing merged CSS to file: ');
 		println(filePath + '.');
-		
+
 		fs.writeFile(filePath, heap.mergedCss, {encoding: 'utf8'});
 	},
 	function DownloadUrls_Start (queue, heap) {
-  	println('Downloading resources referenced by url.');
+		println('Downloading resources referenced by url.');
 		heap.urls = {};
 	},
 	function DownloadUrls_Get (queue, heap) {
@@ -260,26 +260,26 @@ var mainQueue = pqueue([
 		var protocol = urlMatch[2];
 		var basename = path.basename(url);
 		var filePath = 'fonts/' + basename;
-		
+
 		assets.push(filePath);
-		
+
 		queue.pause();
 		httper[protocol].get(url, function (response) {
-  		var absFilePath = path.resolve(__dirname, pathToPackageRoot, filePath);
-  		
-  		println('Downloading font file ' + url);
-  		println('to ' + absFilePath + '.');
-  		
+			var absFilePath = path.resolve(__dirname, pathToPackageRoot, filePath);
+
+			println('Downloading font file ' + url);
+			println('to ' + absFilePath + '.');
+
 			var file = fs.createWriteStream(absFilePath);
 			file.on('finish', function () {
-  			
-  			println('Download complete.');
-  			
+
+				println('Download complete.');
+
 				heap.mergedCss = heap.mergedCss.replace(segment, 'url(' + filePath + ')');
-				
+
 				queue.resume();
 			});
-			
+
 			response.on('data', function(dataChunk) {
 				file.write(dataChunk);
 			}).on("end", function () {
@@ -294,22 +294,22 @@ var mainQueue = pqueue([
 		queue.pc.goto(queue.pc.locate("DownloadUrls_Get"));
 	},
 	function DownloadUrls_End (queue, heap) {
-  	println('Download resources complete.');
+		println('Download resources complete.');
 	},
 	function WriteFinalCssFile (queue, heap) {
-  	var filePath = path.resolve(__dirname, pathToPackageRoot, finalCssFilePath);
-		
+		var filePath = path.resolve(__dirname, pathToPackageRoot, finalCssFilePath);
+
 		println('Writing final CSS to file: ');
 		println(filePath + '.');
-		
+
 		fs.writeFile(filePath, heap.mergedCss, {encoding: 'utf8'});
 	},
 	function AddAssetsToPackage (queue, heap) {
-  	var filePath = path.resolve(__dirname, pathToPackageRoot, packageFilePath);
-  	var packageFile = fs.readFileSync(filePath, {encoding: 'utf8'});
-  	var assetsJSON = JSON.stringify(assets);
-  	packageFile = packageFile.replace(matchRegex, '///>>>>' + bookmarkName + '\n  ' + variableName + ' = ' + assetsJSON + ';\n///<<<<' + bookmarkName + '');
-  	fs.writeFileSync(filePath, packageFile, {encoding: 'utf8'});
+		var filePath = path.resolve(__dirname, pathToPackageRoot, packageFilePath);
+		var packageFile = fs.readFileSync(filePath, {encoding: 'utf8'});
+		var assetsJSON = JSON.stringify(assets);
+		packageFile = packageFile.replace(matchRegex, '///>>>>' + bookmarkName + '\n  ' + variableName + ' = ' + assetsJSON + ';\n///<<<<' + bookmarkName + '');
+		fs.writeFileSync(filePath, packageFile, {encoding: 'utf8'});
 	},
 	pqueue.HALT
 ], "0").boot();
