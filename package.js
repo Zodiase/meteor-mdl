@@ -113,6 +113,8 @@ Package.onUse(function (api) {
   mdlAssets = ["images/buffer.svg","images/tick-mask.svg","images/tick.svg"];
 ///<<<<MDLASSETS
   api.addAssets(prepandPathToFiles(mdlAssets, mdlSrcPath), 'client');
+  // Add helper scss file for fixing asset loading path.
+  api.addFiles('theme.scss', 'client', {isImport: true});
 
   api.export([
     "componentHandler",
