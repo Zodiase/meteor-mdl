@@ -14,7 +14,7 @@ Package.onUse(function (api) {
   'use strict';
   api.versionsFrom('1.2.1');
   api.use('fourseven:scss@3.4.1');
-  
+
   var npmPath = Npm.require('path');
   var npmFs = Npm.require('fs');
 
@@ -107,6 +107,12 @@ Package.onUse(function (api) {
 ///<<<<IMPORTFILES
   var mdlSrcPath = 'src'; // This relies on the symlink.
   api.addFiles(prepandPathToFiles(importFiles, mdlSrcPath), 'client', {isImport: true});
+  // Add other mdl assets.
+  var mdlAssets = [];
+///>>>>MDLASSETS
+  mdlAssets = ["images/buffer.svg","images/tick-mask.svg","images/tick.svg"];
+///<<<<MDLASSETS
+  api.addAssets(prepandPathToFiles(mdlAssets, mdlSrcPath), 'client');
 
   api.export([
     "componentHandler",

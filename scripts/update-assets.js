@@ -17,11 +17,11 @@ function println (data) {
 var pathToPackageRoot = '../';
 var mdlPath = '.npm/package/node_modules/material-design-lite/src';
 var packageFilePath = 'package.js';
-var bookmarkName = 'IMPORTFILES';
-var variableName = 'importFiles';
+var bookmarkName = 'MDLASSETS';
+var variableName = 'mdlAssets';
 var matchRegex = new RegExp('\\/\\/\\/>>>>' + bookmarkName + '((.|\\n)*?)\\/\\/\\/<<<<' + bookmarkName + '', 'g');
 var fileTypes = [
-  '.scss'
+  '.svg'
 ];
 
 println('Scanning directory...');
