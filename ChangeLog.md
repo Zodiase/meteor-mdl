@@ -1,5 +1,9 @@
 Change Log
 ------------------------------------------------------------------------------
+* v1.0.6_3
+  * Added support for settings.
+  * Added support for theme customization.
+  * Added support for accessing to MDL SASS source files.
 * v1.0.6_2
 	* Updated font updating script to support meteor apps not located at root.
 * v1.0.6_1

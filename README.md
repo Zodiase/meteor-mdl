@@ -9,28 +9,35 @@ Contains a custom build of `material.js` having `componentHandler` available glo
 
 [![Build Status](https://travis-ci.org/Zodiase/meteor-mdl.svg?branch=master)](https://travis-ci.org/Zodiase/meteor-mdl)
 
-Looks like some other people also wrapped MDL, why use this one?
-------------------------------------------------------------------------------
-Because the ones I tried don't work. I'm trying to use MDL in some of my Meteor projects and there are issues that won't be fixed by just adding `material.js`.
-
-What I've experienced so far:
-
-* Can't export `componentHandler` with the official build since it's defined with the keyword `var`. To really ***use*** MDL, you need `componentHandler`.
-* When using Iron:Router, template rendering happens ***after*** `document.load` event, so MDL upgrades nothing by itself.
-* Even when not using Iron:Router, it's lucky that `document.load` works; when any MDL components get re-rendered by Blaze, they are screwed again. Because MDL won't automatically re-scan DOM for potential upgrades. Check out my [blaze demo](https://github.com/Zodiase/meteor-mdl/tree/master/integration-tests/issue1) without using this package to see how bad it is.
-
 Features
 ------------------------------------------------------------------------------
+
+* **(New!) Theme color customization (See details below)**
+
+* **(New!) Full access to SASS source code (See details below)**
+
 * Exports `componentHandler` globally (Client Only).
-* Exports `Mdl` globally on the client for changing settings in runtime.
-	* If `MDl.envConfig['blazeFix'] === true` then the Blaze patch is effective. And only in this case:
-		* `MDl.envConfig.patchers.blaze.getUpgradeStyle()` returns the current auto-upgrading style.
-		* `MDl.envConfig.patchers.blaze.setUpgradeStyle('fullUpgrade' | 'mutationOnly' | 'none')` sets the auto-upgrade style.
-			* `'fullUpgrade'` uses `componentHandler.upgradeAllRegistered()` when any mutation is observed.
-			* `'mutationOnly'` uses `componentHandler.upgradeElements(mutation.target)` on mutations when any mutation is observed.
-			* `'none'` does nothing.
+
+* Exports `MDl` globally on the client for changing settings in runtime.
+
+    * `MDl.componentHandler` mirrors `componentHandler`.
+
+    * If `MDl.envConfig['blazeFix'] === true` then the Blaze patch is effective. And only in this case:
+
+        * `MDl.envConfig.patchers.blaze.getUpgradeStyle()` returns the current auto-upgrading style.
+
+        * `MDl.envConfig.patchers.blaze.setUpgradeStyle('fullUpgrade' | 'mutationOnly' | 'none')` sets the auto-upgrade style.
+
+            * `'fullUpgrade'` uses `componentHandler.upgradeAllRegistered()` when any mutation is observed.
+            * `'mutationOnly'` uses `componentHandler.upgradeElements(mutation.target)` on mutations when any mutation is observed.
+            * `'none'` does nothing.
+
 * If you don't want auto-upgrading, turn it off with:
-	* `if (MDl.envConfig['blazeFix']) MDl.envConfig.patchers.blaze.setUpgradeStyle('none');`
+
+    * `if (MDl.envConfig['blazeFix']) MDl.envConfig.patchers.blaze.setUpgradeStyle('none');`
+
+    * (In the future this will be available through the setting file that's been recently supported.)
+
 * Supports [Iron:Router](https://github.com/iron-meteor/iron-router).*
 
 Install
@@ -41,26 +48,68 @@ $ meteor add zodiase:mdl
 
 How to Use
 ------------------------------------------------------------------------------
-There is nothing to do after installing the package. Enjoy! :D
+There is nothing special to do after installing the package. Enjoy! :D
+
+### If you want to pick your own theme, like [what the MDL team have here](http://www.getmdl.io/customize/index.html), here's how:
+
+1. First pick your theme colors from that page. You would have to pick both the **primary color** and the **accent color**.
+
+2. Note that on the lower part of that page, there's a link that basically tells you what colors you have picked.
+
+    * The link is always composed by `material.{primary}-{accent}.min.css`. I picked `deep_orange` and `blue` for example, and that link looks like `material.deep_orange-blue.min.css`.
+
+3. Now create a `zodiase-mdl.json` file under the root of your app if you haven't already. This file stores the settings.
+
+4. In that setting file, compose a JSON document that looks similar to this:
+
+    ```JSON
+    {
+      "theme": {
+        "primary": "deep_orange",
+        "accent": "blue"
+      }
+    }
+    ```
+
+5. This will tell the package to load the corresponding theme file. ***However, meteor might cache package files. To make sure the change is effective, execute `meteor reset`.***
+
+### If you want more than pre-built themes:
+
+You can load up the SASS source code and define your own colors!
+
+1. First you'd need to tell the package not to load any theme file.
+
+    ```JSON
+    {
+      "theme": false
+    }
+    ```
+
+2. Define your own theme colors and load MDL's SASS code.
+
+    ```SASS
+    // mdl-theme.scss
+    $color-primary: #FFF;
+    $color-accent: #000;
+    @import '{zodiase:mdl}/theme';
+    ```
+
+3. There you go!
+
+4. There's a full range of variables you can customize. Check out [MDL's variables](https://github.com/google/material-design-lite/blob/master/src/_variables.scss) to learn more.
+
+### If you want to import SASS files from MDL's source code:
+
+They are all under `{zodiase:mdl}/src` so have fun!
 
 Known Issues
 ------------------------------------------------------------------------------
-* ***Do not use MDL components at the top level of any templates or template event handlers may not work correctly.***
-* Understand how MDL upgrades components and do not separate component elements into different templates unless you want to turn off auto-upgrading and do it manually.
 
-Content
-------------------------------------------------------------------------------
-| File                | Description                                     |
-| ------------------- | ----------------------------------------------- |
-| package.js          | package descriptions.                           |
-| material.css        | css file built straight from MDL.               |
-| material-icons.css  | css file built straight from MDL.               |
-| material.js         | custom built for exporting componentHandler.    |
-| envConfigs.js       | defines global vars shared among other scripts. |
-| export.js           | used for exporting componentHandler.            |
-| patchers/*          | helpers for adding more MDL's auto-upgrades.    |
-| tests/*             | unit tests.                                     |
-| integration-tests/* | integration-tests/demos.                        |
+* ***Do not use MDL components at the top level of any templates or template event handlers may not work correctly.***
+
+* Understand how MDL upgrades components and do not separate the necessary elements of a component into different templates unless you want to turn off auto-upgrading and do it manually.
+
+* Due to meteor caching package files, changes to the setting file may not take effect until you execute `meteor reset`. Be aware that doing so also resets your database!
 
 Versioning
 ------------------------------------------------------------------------------
