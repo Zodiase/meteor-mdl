@@ -1,6 +1,6 @@
 {
   "name": "zodiase-mdl",
-  "version": "1.0.6_3",
+  "version": "1.0.6",
   "description": "A wrapper package for Google's Material Design Lite.",
   "private": true,
   "license": "Apache-2.0",
