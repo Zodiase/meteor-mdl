@@ -132,6 +132,8 @@ class Compiler {
       let themeFileName = self.getThemeFileName(finalSettings.theme.primary, finalSettings.theme.accent, finalSettings.theme.minified);
       log(themeFileName);
       let themeFilePath = path.join('dist', themeFileName);
+
+      //! For some reason `.addStlyesheet` does not exist.
       log(settingsFile.addStlyesheet);
 /*
       settingsFile.addStlyesheet({
