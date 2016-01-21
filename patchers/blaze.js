@@ -6,14 +6,14 @@
 // also http://caniuse.com/#search=MutationObserver
 
 
-/*global EnvConfig:true*/
+/*global MDl:true*/
 /*global componentHandler:true*/
 
 var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 if (!MutationObserver) return;
 
-EnvConfig['blazeFix'] = true;
-var myEnv = EnvConfig['patchers']['blaze'] = {};
+MDl.envConfig['blazeFix'] = true;
+var myEnv = MDl.envConfig['patchers']['blaze'] = {};
 
 var handleMutation = function (mutation) {
   switch (mutation.type) {
@@ -65,9 +65,9 @@ var observer = new MutationObserver(function(mutations, observer) {
   // Use the lock to ignore mutations happened during the process of an update.
   if (observerLocked) return;
   observerLocked = true;
-  
+
   activeMutationObserverBehavior(mutations, observer);
-  
+
   observerLocked = false;
 }), observing = false, observeConfig = {
     childList: true,

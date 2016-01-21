@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "clone": {
+      "version": "1.0.2"
+    },
+    "extend": {
+      "version": "3.0.0"
+    }
+  }
+}
