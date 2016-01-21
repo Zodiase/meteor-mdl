@@ -22,3 +22,5 @@ coffeescript
 ejson
 less
 zodiase:mdl
+zodiase:mdl-assets
+zodiase:check

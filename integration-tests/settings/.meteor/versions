@@ -56,6 +56,7 @@ reload@1.1.4
 retry@1.0.4
 routepolicy@1.0.6
 session@1.1.1
+sha@1.0.4
 spacebars@1.0.7
 spacebars-compiler@1.0.7
 standard-minifiers@1.0.2
@@ -67,4 +68,6 @@ underscore@1.0.4
 url@1.0.5
 webapp@1.2.3
 webapp-hashing@1.0.5
+zodiase:check@0.0.4
 zodiase:mdl@1.0.6_3
+zodiase:mdl-assets@1.0.6
