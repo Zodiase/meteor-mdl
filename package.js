@@ -58,7 +58,7 @@ Package.onTest(function (api) {
 Package.registerBuildPlugin({
   name: 'build',
   use: [
-    'ecmascript',
+    'ecmascript@0.1.6',
     'zodiase:check@0.0.4',
     'zodiase:mdl-assets@' + assetPackageVersion
   ],
