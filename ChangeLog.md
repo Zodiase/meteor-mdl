@@ -1,5 +1,7 @@
 Change Log
 ------------------------------------------------------------------------------
+* v1.0.6_5
+  * I forgot to clean up the release, causing v1.0.6_4 to be VERY large. So I'm re-publishing. Take this as v1.0.6_4.
 * v1.0.6_4
   * Fixed the issue when added from atmosphere the settings file is ineffective.
   * Unfortunately this update has to break compatibility.
