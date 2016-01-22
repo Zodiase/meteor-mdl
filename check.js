@@ -9,15 +9,8 @@ if (Meteor.isClient) {
       "componentHandler": Match.Optional(Object)
     }), 'Package is corrupted.');
 
-/*
-    if (!Meteor._bootstrapSettingsFileLoaded) {
-      console.warn("Bootstrap disabled. Create a file named 'bootstrap-settings.json' to enable.");
-    } else {
-      try {
-        Meteor._bootstrapSettingsFileLoaded = undefined;
-        delete Meteor._bootstrapSettingsFileLoaded;
-      } catch (e) {}
+    if (!MDl.settings) {
+      console.warn("MDl disabled. Create a file named 'zodiase-mdl.json' at the root of the app to enable.");
     }
-*/
   });
 }

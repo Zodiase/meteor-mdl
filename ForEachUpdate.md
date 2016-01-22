@@ -1,9 +1,7 @@
 This is a note to myself about the tasks to perform for each update.
 
-1. MDL sources are included through npm. Make sure the dependency version is up-to-date.
-2. Update MDL source assets with `scripts/update-assets.js`.
-3. Update MDL source import files with `scripts/update-importfiles.js`.
-4. Update material icons css files and fonts with `scripts/update-icons.js`.
+1. MDL sources are provided by a separate package `zodiase:mdl-assets`.
+4. MDI fonts are provided by a separate package `zodiase:material-design-icons-fonts`.
 5. Bump version in `package.js`.
 6. Bump version in `package.json`. Only supports `0.0.0`.
 7. Run unit tests with `meteor test-packages ./`.

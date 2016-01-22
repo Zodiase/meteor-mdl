@@ -16,17 +16,32 @@ const clone = Npm.require('clone');
 const path = Plugin.path;
 
 Plugin.registerCompiler({
+  archMatching: 'web',
   extensions: [],
-  filenames: [settingsFileName],
-  archMatching: 'web'
+  filenames: [settingsFileName]
 }, () => new Compiler);
 
 class Compiler {
+  static tryToGetAssetData(inputFile, assetPath) {
+    let self = Compiler;
+    try {
+      return getAsset(assetPath);
+    } catch (error) {
+      inputFile.error(error);
+      return null;
+    }
+  }
+
   static tryToParseAndLoadSettings(settingsFile) {
     let self = Compiler;
-    let fileContents = settingsFile.getContentsAsString();
+    let fileContents = settingsFile.getContentsAsString().trim();
+    if (fileContents === '') {
+      log('Enabled with default settings. See documentation for customization options.');
+      return clone(self.defaultSettings, false);
+    }
+    //else
     try {
-      let settingsFromFile = EJSON.parse(fileContents);
+      let settingsFromFile = JSON.parse(fileContents);
       let finalSettings = extend(true, {}, self.defaultSettings, settingsFromFile);
       check(finalSettings, self.settingsSchema);
       return finalSettings;
@@ -35,9 +50,62 @@ class Compiler {
       return null;
     }
   }
-  static getThemeFileName(primary, accent, minified = true) {
-    return 'material.' + path.basename(primary) + '-' + path.basename(accent) + (minified ? '.min' : '') + '.css';
+
+  static getThemeFileName(primary, accent) {
+    return 'material.' + path.basename(primary) + '-' + path.basename(accent) + '.min.css';
   }
+
+  static loadJsLib(inputFile, settings) {
+    let self = Compiler;
+    let jsLibFileName = settings.jsLib.minified ? 'material.min.js' : 'material.js';
+    let jsLibFilePath = path.join('dist', jsLibFileName);
+    let jsLibFileData = self.tryToGetAssetData(inputFile, jsLibFilePath);
+    if (jsLibFileData === null) {
+      // Has error getting the asset.
+      inputFile.error(new Error('Could not load JavaScript lib file.'));
+      return;
+    }
+    //else
+    inputFile.addJavaScript({
+      data: jsLibFileData,
+      path: path.join('client', 'lib', jsLibFilePath),
+      bare: true
+    });
+    inputFile.addJavaScript({
+      data: 'MDl.componentHandler = componentHandler;\n',
+      path: path.join('client', 'lib', 'attach-componentHandler.generated.js'),
+      bare: true
+    });
+  }
+
+  static loadTheme(inputFile, settings) {
+    let self = Compiler;
+    let theme = settings.theme;
+    if (theme === false) {
+      // Disable theme.
+      log('Theme disabled.');
+      return;
+    }
+    //else
+
+    // Load theme.
+    let themeFileName = self.getThemeFileName(theme.primary, theme.accent);
+    //log(themeFileName);
+    let themeFilePath = path.join('dist', themeFileName);
+    let themeFileData = self.tryToGetAssetData(inputFile, themeFilePath);
+    if (themeFileData === null) {
+      // Has error getting the asset.
+      inputFile.error(new Error('Could not load theme stylesheet.'));
+      return;
+    }
+    //else
+    inputFile.addStylesheet({
+      data: themeFileData,
+      path: path.join('client', 'lib', themeFilePath),
+      bare: true
+    });
+  }
+
   processFilesForTarget(files) {
     let self = Compiler;
 
@@ -105,46 +173,13 @@ class Compiler {
 
     // Attach the settings to MDl.
     settingsFile.addJavaScript({
-      data: 'MDl.settings = EJSON.parse(decodeURI("' + encodeURI(EJSON.stringify(finalSettings)) + '"));\n console.info("compiler");',
+      data: 'MDl.settings = JSON.parse(decodeURI("' + encodeURI(JSON.stringify(finalSettings)) + '"));\n',
       path: path.join('client', 'lib', 'settings-file-checked.generated.js'),
       bare: true
     });
 
-    // Load Js Lib.
-    let jsLibFileName = finalSettings.jsLib.minified ? 'material.min.js' : 'material.js';
-    let jsLibPath = path.join('dist', jsLibFileName);
-    settingsFile.addJavaScript({
-      data: getAsset(jsLibPath),
-      path: path.join('client', 'lib', jsLibPath),
-      bare: true
-    });
-    settingsFile.addJavaScript({
-      data: 'MDl.componentHandler = componentHandler;\n',
-      path: path.join('client', 'lib', 'attach-componentHandler.generated.js'),
-      bare: true
-    });
-
-    if (finalSettings.theme === false) {
-      // Disable theme.
-      log('Theme disabled.');
-    } else {
-      // Load theme.
-      let themeFileName = self.getThemeFileName(finalSettings.theme.primary, finalSettings.theme.accent, finalSettings.theme.minified);
-      log(themeFileName);
-      let themeFilePath = path.join('dist', themeFileName);
-
-      //! For some reason `.addStlyesheet` does not exist.
-      log(settingsFile.addStlyesheet);
-/*
-      settingsFile.addStlyesheet({
-        data: getAsset(jsLibPath),
-        path: path.join('client', 'lib', jsLibPath),
-        bare: true
-      });
-*/
-    }
-
-//     log(Assets.getText('src/images/buffer.svg'));
+    self.loadJsLib(settingsFile, finalSettings);
+    self.loadTheme(settingsFile, finalSettings);
   }
 }
 Compiler.defaultSettings = {
@@ -153,8 +188,7 @@ Compiler.defaultSettings = {
   },
   "theme": {
     "primary": "indigo",
-    "accent": "pink",
-    "minified": false
+    "accent": "pink"
   },
   "verbose": false
 };
@@ -162,10 +196,10 @@ Compiler.settingsSchema = Match.ObjectIncluding({
   "jsLib": Match.ObjectIncluding({
     "minified": Boolean
   }),
+  // Note: there're only minified theme files.
   "theme": Match.OneOf(false, Match.ObjectIncluding({
     "primary": String,
-    "accent": String,
-    "minified": Boolean
+    "accent": String
   })),
   "verbose": Boolean
 });
