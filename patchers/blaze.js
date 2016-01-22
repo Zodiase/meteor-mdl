@@ -7,7 +7,6 @@
 
 
 /*global MDl:true*/
-/*global componentHandler:true*/
 
 var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 if (!MutationObserver) return;
@@ -26,7 +25,7 @@ var handleMutation = function (mutation) {
     case 'childList':
       // Upgrade the new children.
       if (mutation.addedNodes.length > 0 && mutation.target instanceof Element) {
-        componentHandler.upgradeElements(mutation.target);
+        MDl.componentHandler.upgradeElements(mutation.target);
       }
       break;
     default:
@@ -36,7 +35,7 @@ var handleMutation = function (mutation) {
 
 var mutationObserverBehaviors = {
   'fullUpgrade': function (mutations, observer) {
-    componentHandler.upgradeAllRegistered();
+    MDl.componentHandler.upgradeAllRegistered();
   },
   'mutationOnly': function (mutations, observer) {
     for (var i = 0, n = mutations.length; i < n; i++) {
@@ -80,5 +79,7 @@ var observer = new MutationObserver(function(mutations, observer) {
   };
 
 Meteor.startup(function () {
-  observer.observe(document.body, observeConfig);
+  if (MDl.componentHandler) {
+    observer.observe(document.body, observeConfig);
+  }
 });
