@@ -1,7 +1,7 @@
 Tinytest.add('MDl/exposure-basic', function (test) {
 	test.isNotUndefined(componentHandler);
 	test.instanceOf(componentHandler, Object);
-	
+
 	test.instanceOf(componentHandler.upgradeDom,               Function);
 	test.instanceOf(componentHandler.upgradeElement,           Function);
 	test.instanceOf(componentHandler.upgradeElements,          Function);
@@ -14,13 +14,21 @@ Tinytest.add('MDl/exposure-basic', function (test) {
 Tinytest.add('MDl/exposure-alias', function (test) {
 	test.isNotUndefined(MDl);
 	test.instanceOf(MDl, Object);
-	
+
 	test.isNotUndefined(MDl.componentHandler);
 	test.equal(MDl.componentHandler, componentHandler);
-	
+
 	test.isNotUndefined(MDl.envConfig);
 	test.instanceOf(MDl.envConfig, Object);
-	
+
 	test.isNotUndefined(MDl.envConfig.patchers);
 	test.instanceOf(MDl.envConfig.patchers, Object);
+});
+
+Tinytest.add('MDl/exposure-extras', function (test) {
+	test.isNotUndefined(MDl);
+	test.instanceOf(MDl, Object);
+
+	test.isNotUndefined(MDl.settings);
+	test.instanceOf(MDl.settings, Object);
 });

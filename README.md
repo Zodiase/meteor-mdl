@@ -48,7 +48,9 @@ $ meteor add zodiase:mdl
 
 How to Use
 ------------------------------------------------------------------------------
-There is nothing special to do after installing the package. Enjoy! :D
+**(Important change since version `1.0.6_4`)** After installing, create an empty settings file `zodiase-mdl.json` under the root of your app. **Without it most functions will be disabled.**
+
+Other than that, there is nothing special to do. Enjoy! :D
 
 ### If you want to pick your own theme, like [what the MDL team have here](http://www.getmdl.io/customize/index.html), here's how:
 
@@ -71,7 +73,7 @@ There is nothing special to do after installing the package. Enjoy! :D
     }
     ```
 
-5. This will tell the package to load the corresponding theme file. ***However, meteor might cache package files. To make sure the change is effective, execute `meteor reset`.***
+5. This will tell the package to load the corresponding theme file. <del>***However, meteor might cache package files. To make sure the change is effective, execute `meteor reset`.***</del>(Issue resolved since version `1.0.6_4`.)
 
 ### If you want more than pre-built themes:
 
@@ -98,9 +100,9 @@ You can load up the SASS source code and define your own colors!
 
 4. There's a full range of variables you can customize. Check out [MDL's variables](https://github.com/google/material-design-lite/blob/master/src/_variables.scss) to learn more.
 
-### If you want to import SASS files from MDL's source code:
+### If you want to import SASS files from MDL's source code: (Updated in `1.0.6_4`)
 
-They are all under `{zodiase:mdl}/src` so have fun!
+They are all under <del>`{zodiase:mdl}/src`</del>`{zodiase:mdl-assets}/src` so have fun!
 
 Known Issues
 ------------------------------------------------------------------------------
@@ -109,7 +111,7 @@ Known Issues
 
 * Understand how MDL upgrades components and do not separate the necessary elements of a component into different templates unless you want to turn off auto-upgrading and do it manually.
 
-* Due to meteor caching package files, changes to the setting file may not take effect until you execute `meteor reset`. Be aware that doing so also resets your database!
+* <del>Due to meteor caching package files, changes to the setting file may not take effect until you execute `meteor reset`. Be aware that doing so also resets your database!</del>(fixed)
 
 Versioning
 ------------------------------------------------------------------------------

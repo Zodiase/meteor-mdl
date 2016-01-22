@@ -1,5 +1,12 @@
 Change Log
 ------------------------------------------------------------------------------
+* v1.0.6_4
+  * Fixed the issue when added from atmosphere the settings file is ineffective.
+  * Unfortunately this update has to break compatibility.
+  * Due to the changes to how the settings file is captured and handled, now the settings file is required for the package to function. Otherwise only the material design icons font will be effective.
+  * If no settings file is found, in the client side console there will be a warning for you to add the settings file.
+  * Refactored mdl assets and material design icons into dedicated packages.
+  * From now on, load SASS sources from package `zodiase:mdl-assets` instead. However, you should still do `@import '{zodiase:mdl}/theme'`.
 * v1.0.6_3
   * Added support for settings.
   * Added support for theme customization.

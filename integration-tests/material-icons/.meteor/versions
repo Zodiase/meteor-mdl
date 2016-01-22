@@ -63,4 +63,7 @@ underscore@1.0.4
 url@1.0.5
 webapp@1.2.3
 webapp-hashing@1.0.5
-zodiase:mdl@1.0.6_3
+zodiase:check@0.0.4
+zodiase:material-design-icons-fonts@2.1.3
+zodiase:mdl@1.0.6_4
+zodiase:mdl-assets@1.0.6
