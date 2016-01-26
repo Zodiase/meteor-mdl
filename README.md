@@ -91,8 +91,8 @@ You can load up the SASS source code and define your own colors!
 
     ```SASS
     // mdl-theme.scss
-    $color-primary: #FFF;
-    $color-accent: #000;
+    $color-primary: "0,0,0";
+    $color-accent: "255,255,255";
     @import '{zodiase:mdl}/theme';
     ```
 
