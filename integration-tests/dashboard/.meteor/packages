@@ -7,7 +7,6 @@
 autopublish
 insecure
 iron:router
-zodiase:mdl
 coffeescript
 less
 standard-minifiers
@@ -25,3 +24,4 @@ ejson
 spacebars
 check
 fourseven:scss
+zodiase:mdl

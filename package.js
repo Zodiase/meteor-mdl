@@ -1,5 +1,5 @@
 var mdlVersion = '1.0.6';
-var revision = 6;
+var revision = 7;
 var assetRevision = 0;
 var mdiVersion = '2.1.3';
 
@@ -18,9 +18,9 @@ Package.onUse(function (api) {
   'use strict';
   api.versionsFrom('1.2.1');
   api.use('isobuild:compiler-plugin@1.0.0');
-  api.use('zodiase:check@0.0.4');
-  api.imply('zodiase:mdl-assets@' + assetPackageVersion);
-  api.imply('zodiase:material-design-icons-fonts@' + mdiVersion);
+  api.use('zodiase:check@=0.0.4');
+  api.imply('zodiase:mdl-assets@=' + assetPackageVersion);
+  api.imply('zodiase:material-design-icons-fonts@=' + mdiVersion);
   api.use('fourseven:scss@3.4.1');
 
   log('Warning! Breaking Compatibility!');
@@ -59,8 +59,8 @@ Package.registerBuildPlugin({
   name: 'build',
   use: [
     'ecmascript@0.1.6',
-    'zodiase:check@0.0.4',
-    'zodiase:mdl-assets@' + assetPackageVersion
+    'zodiase:check@=0.0.4',
+    'zodiase:mdl-assets@=' + assetPackageVersion
   ],
   sources: [
     'plugin/build.js'
