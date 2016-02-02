@@ -4,7 +4,7 @@ if Meteor.isClient
   Session.setDefault('haveSwitchedOutFromTab1', false)
 
   tpl = Template['body']
-  
+
   tpl.helpers
     tabEquals: (value) ->
       return Session.get('tab') == value
@@ -21,15 +21,15 @@ if Meteor.isClient
           Session.set('haveSwitchedOutFromTab1', true)
         Session.set('tab', targetTabId)
       return true
-  
+
   tpl.onRendered (tpl) ->
     tpl = this
-    
+
     MochaWeb.testOnly () ->
       console.clear()
       expect = chai.expect
-      
-      hasRippleEffect = (element) ->
+
+      hasRippleEffect = (element, done) ->
         $testButton = tpl.$(element)
         $rippleObject = $testButton.find('.mdl-ripple')
         expect($rippleObject.length).to.not.equal(0)
@@ -45,30 +45,34 @@ if Meteor.isClient
           'bubbles': true
           'cancelable': true
         }))
-        expect($rippleObject.hasClass('is-visible')).to.be.false
+        setTimeout (() ->
+          expect($rippleObject.hasClass('is-visible')).to.be.false
+          done()
+        ), 0
+
         return true
-      
+
       hasNoRippleEffect = (element) ->
         $testButton = tpl.$('.testbutton')
         $rippleObject = $testButton.find('.mdl-ripple')
         expect($rippleObject.length).to.equal(0)
         return true
-      
+
       describe 'Issue #1', () ->
         upgradeStyle = null
         it '*Clear upgrade style', () ->
           upgradeStyle = MDl.envConfig.patchers.blaze.getUpgradeStyle()
           MDl.envConfig.patchers.blaze.setUpgradeStyle('none')
           return true
-        
+
         it 'Button should exist', () ->
           expect(tpl.$('.testbutton')).to.be.not.empty
           return true
-        
-        it 'Button should have ripple effect at first', () ->
-          hasRippleEffect('.testbutton')
+
+        it 'Button should have ripple effect at first', (done) ->
+          hasRippleEffect('.testbutton', done)
           return true
-        
+
         it 'Button should not have ripple effect after tab switch', (done) ->
           tpl.$('.tabbutton[for=2]').click()
           expect(Session.get('tab')).to.equal(2)
@@ -85,7 +89,7 @@ if Meteor.isClient
             return true
           , 100
           return true
-        
+
         it 'Button should have ripple effect after tab switch with auto-upgrading', (done) ->
           MDl.envConfig.patchers.blaze.setUpgradeStyle('fullUpgrade')
           tpl.$('.tabbutton[for=2]').click()
@@ -95,15 +99,11 @@ if Meteor.isClient
             tpl.$('.tabbutton[for=1]').click()
             expect(Session.get('tab')).to.equal(1)
             # Give some time for Blaze to render the template.
-            setTimeout () ->
-              hasRippleEffect('.testbutton')
-              done()
-              return true
-            , 100
+            setTimeout hasRippleEffect.bind(null, '.testbutton', done), 100
             return true
           , 100
           return true
-        
+
         it '*Restore upgrade style', () ->
           MDl.envConfig.patchers.blaze.setUpgradeStyle(upgradeStyle)
           return true
