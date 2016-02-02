@@ -61,8 +61,8 @@ if Meteor.isClient
       describe 'Issue #1', () ->
         upgradeStyle = null
         it '*Clear upgrade style', () ->
-          upgradeStyle = MDl.envConfig.patchers.blaze.getUpgradeStyle()
-          MDl.envConfig.patchers.blaze.setUpgradeStyle('none')
+          upgradeStyle = MDl.autoUpgrade.getUpgradeStyle()
+          MDl.autoUpgrade.setUpgradeStyle('none')
           return true
 
         it 'Button should exist', () ->
@@ -91,7 +91,7 @@ if Meteor.isClient
           return true
 
         it 'Button should have ripple effect after tab switch with auto-upgrading', (done) ->
-          MDl.envConfig.patchers.blaze.setUpgradeStyle('fullUpgrade')
+          MDl.autoUpgrade.setUpgradeStyle('fullUpgrade')
           tpl.$('.tabbutton[for=2]').click()
           expect(Session.get('tab')).to.equal(2)
           # Give some time for Blaze to render the template.
@@ -105,5 +105,5 @@ if Meteor.isClient
           return true
 
         it '*Restore upgrade style', () ->
-          MDl.envConfig.patchers.blaze.setUpgradeStyle(upgradeStyle)
+          MDl.autoUpgrade.setUpgradeStyle(upgradeStyle)
           return true
