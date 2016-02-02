@@ -1,5 +1,7 @@
 Change Log
 ------------------------------------------------------------------------------
+* v1.1.0
+  * Updated MDl to v1.1.0.
 * v1.0.6_7
   * Lock down critical dependencies to prevent things like loading mdl-asset 1.1.0 or higher.
 * v1.0.6_6
