@@ -2,6 +2,9 @@ Change Log
 ------------------------------------------------------------------------------
 * v1.1.0
   * Updated MDl to v1.1.0.
+  * Added css fix for https://github.com/google/material-design-icons/issues/299.
+  * Renamed blaze patcher to autoUpgrade and attached it to MDl.
+  * Enabled configuring auto-upgrader (blaze patcher) with the settings file.
 * v1.0.6_7
   * Lock down critical dependencies to prevent things like loading mdl-asset 1.1.0 or higher.
 * v1.0.6_6
