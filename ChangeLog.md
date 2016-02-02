@@ -1,5 +1,7 @@
 Change Log
 ------------------------------------------------------------------------------
+* v1.0.6_7
+  * Lock down critical dependencies to prevent things like loading mdl-asset 1.1.0 or higher.
 * v1.0.6_6
   * Corrected SASS example in README.
 * v1.0.6_5
