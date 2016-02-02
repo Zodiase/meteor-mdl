@@ -200,6 +200,7 @@ Compiler.defaultSettings = {
     "accent": "pink"
   },
   "patches": {
+    "autoUpgrade": "fullUpgrade",
     "applyListIconFix": true
   },
   "verbose": false
@@ -214,6 +215,7 @@ Compiler.settingsSchema = Match.ObjectIncluding({
     "accent": String
   })),
   "patches": {
+    "autoUpgrade": Match.OneOf(false, "fullUpgrade", "mutationOnly", "none"),
     "applyListIconFix": Boolean
   },
   "verbose": Boolean

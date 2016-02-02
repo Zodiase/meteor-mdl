@@ -17,11 +17,14 @@ Package.describe({
 Package.onUse(function (api) {
   'use strict';
   api.versionsFrom('1.2.1');
-  api.use('isobuild:compiler-plugin@1.0.0');
+  api.use([
+    'ecmascript',
+    'isobuild:compiler-plugin@1.0.0',
+    'fourseven:scss@3.4.1'
+  ]);
   api.use('zodiase:check@=0.0.4');
   api.imply('zodiase:mdl-assets@=' + assetPackageVersion);
   api.imply('zodiase:material-design-icons-fonts@=' + mdiVersion);
-  api.use('fourseven:scss@3.4.1');
 
   log('Warning! Breaking Compatibility!');
   log('Since version 1.0.6_4, now the settings file IS required. Without it, most of the functions of this package will be turned off!');
@@ -35,9 +38,9 @@ Package.onUse(function (api) {
     'check.js'
   ], 'client');
 
-  // Patchers.
+  // Patches.
   api.addFiles([
-    'patchers/blaze.js'
+    'patch/autoUpgrade.js'
   ], 'client');
 
   // Add helper scss file for fixing asset loading path.
@@ -45,20 +48,23 @@ Package.onUse(function (api) {
 });
 
 Package.onTest(function (api) {
-  api.use('tinytest');
-  api.use('jquery');
-  api.use('zodiase:mdl');
+  api.use([
+    'ecmascript',
+    'tinytest',
+    'jquery',
+    'zodiase:mdl'
+  ]);
   api.addFiles([
     'zodiase-mdl.json',
     'tests/export.js',
-    'tests/patcher-blaze.js'
+    'tests/patch-autoUpgrade.js'
   ], 'client');
 });
 
 Package.registerBuildPlugin({
   name: 'build',
   use: [
-    'ecmascript@0.1.6',
+    'ecmascript',
     'zodiase:check@=0.0.4',
     'zodiase:mdl-assets@=' + assetPackageVersion
   ],

@@ -17,12 +17,6 @@ Tinytest.add('MDl/exposure-alias', function (test) {
 
 	test.isNotUndefined(MDl.componentHandler);
 	test.equal(MDl.componentHandler, componentHandler);
-
-	test.isNotUndefined(MDl.envConfig);
-	test.instanceOf(MDl.envConfig, Object);
-
-	test.isNotUndefined(MDl.envConfig.patchers);
-	test.instanceOf(MDl.envConfig.patchers, Object);
 });
 
 Tinytest.add('MDl/exposure-extras', function (test) {
