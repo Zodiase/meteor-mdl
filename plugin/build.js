@@ -180,6 +180,15 @@ class Compiler {
 
     self.loadJsLib(settingsFile, finalSettings);
     self.loadTheme(settingsFile, finalSettings);
+
+    // Apply List Icon Fix. See https://github.com/google/material-design-icons/issues/299.
+    if (finalSettings.patches.applyListIconFix) {
+      settingsFile.addStylesheet({
+        data: '.mdl-list__item .mdl-list__item-primary-content .material-icons {height: auto; width: auto;}\n',
+        path: path.join('client', 'lib', 'list-icon-fix.css'),
+        bare: true
+      });
+    }
   }
 }
 Compiler.defaultSettings = {
@@ -189,6 +198,9 @@ Compiler.defaultSettings = {
   "theme": {
     "primary": "indigo",
     "accent": "pink"
+  },
+  "patches": {
+    "applyListIconFix": true
   },
   "verbose": false
 };
@@ -201,6 +213,9 @@ Compiler.settingsSchema = Match.ObjectIncluding({
     "primary": String,
     "accent": String
   })),
+  "patches": {
+    "applyListIconFix": Boolean
+  },
   "verbose": Boolean
 });
 
