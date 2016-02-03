@@ -109,8 +109,7 @@ class Compiler {
   processFilesForTarget(files) {
     let self = Compiler;
 
-    let settingsFile = null,
-        finalSettings = null;
+    let settingsFile = null;
 
     for (let file of files) {
       /*
@@ -151,34 +150,34 @@ class Compiler {
       settingsFile = file;
     }
 
-    if (settingsFile !== null) {
-      finalSettings = self.tryToParseAndLoadSettings(settingsFile);
+    // It is possible settingsFile === null.
+    if (settingsFile === null) {
+      // Settings file not found. Can not proceed.
+    } else {
+      let finalSettings = self.tryToParseAndLoadSettings(settingsFile);
       if (finalSettings === null) {
         // Has error parsing the settings.
-        return;
+      } else {
+        log('Using settings:', finalSettings);
+        // Attach the settings to MDl.
+        settingsFile.addJavaScript({
+          data: 'MDl.settings = JSON.parse(decodeURI("' + encodeURI(JSON.stringify(finalSettings)) + '"));\n',
+          path: path.join('client', 'lib', 'settings-file-checked.generated.js'),
+          bare: true
+        });
+
+        self.loadJsLib(settingsFile, finalSettings);
+        self.loadTheme(settingsFile, finalSettings);
+
+        // Apply List Icon Fix. See https://github.com/google/material-design-icons/issues/299.
+        if (finalSettings.patches.applyListIconFix) {
+          settingsFile.addStylesheet({
+            data: '.mdl-list__item .mdl-list__item-primary-content .material-icons {height: auto; width: auto;}\n',
+            path: path.join('client', 'lib', 'list-icon-fix.css'),
+            bare: true
+          });
+        }
       }
-    } else {
-      finalSettings = clone(self.defaultSettings, false);
-    }
-    log('Using settings:', finalSettings);
-
-    // Attach the settings to MDl.
-    settingsFile.addJavaScript({
-      data: 'MDl.settings = JSON.parse(decodeURI("' + encodeURI(JSON.stringify(finalSettings)) + '"));\n',
-      path: path.join('client', 'lib', 'settings-file-checked.generated.js'),
-      bare: true
-    });
-
-    self.loadJsLib(settingsFile, finalSettings);
-    self.loadTheme(settingsFile, finalSettings);
-
-    // Apply List Icon Fix. See https://github.com/google/material-design-icons/issues/299.
-    if (finalSettings.patches.applyListIconFix) {
-      settingsFile.addStylesheet({
-        data: '.mdl-list__item .mdl-list__item-primary-content .material-icons {height: auto; width: auto;}\n',
-        path: path.join('client', 'lib', 'list-icon-fix.css'),
-        bare: true
-      });
     }
   }
 }
