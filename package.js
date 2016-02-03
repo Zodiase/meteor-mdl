@@ -1,4 +1,4 @@
-var mdlVersion = '1.1.0';
+var mdlVersion = '1.1.1';
 var revision = 0;
 var assetRevision = 0;
 var mdiVersion = '2.1.3';

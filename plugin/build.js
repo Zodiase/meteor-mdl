@@ -168,15 +168,6 @@ class Compiler {
 
         self.loadJsLib(settingsFile, finalSettings);
         self.loadTheme(settingsFile, finalSettings);
-
-        // Apply List Icon Fix. See https://github.com/google/material-design-icons/issues/299.
-        if (finalSettings.patches.applyListIconFix) {
-          settingsFile.addStylesheet({
-            data: '.mdl-list__item .mdl-list__item-primary-content .material-icons {height: auto; width: auto;}\n',
-            path: path.join('client', 'lib', 'list-icon-fix.css'),
-            bare: true
-          });
-        }
       }
     }
   }
@@ -190,8 +181,7 @@ Compiler.defaultSettings = {
     "accent": "pink"
   },
   "patches": {
-    "autoUpgrade": "fullUpgrade",
-    "applyListIconFix": true
+    "autoUpgrade": "fullUpgrade"
   },
   "verbose": false
 };
@@ -205,8 +195,7 @@ Compiler.settingsSchema = Match.ObjectIncluding({
     "accent": String
   })),
   "patches": {
-    "autoUpgrade": Match.OneOf(false, "fullUpgrade", "mutationOnly", "none"),
-    "applyListIconFix": Boolean
+    "autoUpgrade": Match.OneOf(false, "fullUpgrade", "mutationOnly", "none")
   },
   "verbose": Boolean
 });
