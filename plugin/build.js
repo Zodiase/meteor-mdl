@@ -131,17 +131,8 @@ class Compiler {
        * .addAsset() - Add a file to serve as-is to the browser or to include on the browser, depending on the target. On the web, it will be served at the exact path requested. For server targets, it can be retrieved using Assets.getText or Assets.getBinary.
        * .addHtml() - Works in web targets only. Add markup to the head or body section of the document.
        */
-      let arch = file.getArch(),
-          basename = file.getBasename(),
+      let basename = file.getBasename(),
           dirname = file.getDirname();
-
-      //log(arch, basename, dirname);
-
-      // Changes only affect browser.
-      if (arch !== 'web.browser') {
-        continue;
-      }
-      //else
 
       // Settings file only allowed at root.
       if (dirname !== '.') {
