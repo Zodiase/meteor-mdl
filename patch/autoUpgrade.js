@@ -81,6 +81,12 @@ if (Meteor.isClient) {
   };
 
   Meteor.startup(function () {
+    // Check if settings is loaded.
+    if (typeof this.settings === 'undefined') {
+      return;
+    }
+    //else
+
     // Read settings.
     let upgradeStyle = this.settings.patches.autoUpgrade;
     // If upgradeStyle is `false`, disable everything.
