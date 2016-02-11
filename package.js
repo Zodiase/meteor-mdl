@@ -52,6 +52,7 @@ Package.onTest(function (api) {
     'ecmascript',
     'tinytest',
     'jquery',
+    'zodiase:function-bind@0.0.1', // Polyfill for PhantomJS.
     'zodiase:mdl'
   ]);
   api.addFiles([
