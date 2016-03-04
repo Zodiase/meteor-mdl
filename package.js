@@ -69,7 +69,7 @@ Package.onTest(function (api) {
 Package.registerBuildPlugin({
   name: 'build',
   use: [
-    'caching-compiler',
+    'caching-compiler@1.0.0',
     'ecmascript',
     'zodiase:check@=0.0.4',
     'zodiase:mdl-assets@=' + assetPackageVersion
