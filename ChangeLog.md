@@ -1,5 +1,10 @@
 Change Log
 ------------------------------------------------------------------------------
+* v1.1.1
+  * Updated MDl to v1.1.1.
+  * Fix the error when building for cordova.
+  * Fix the exception when no valid settings file is found.
+  * Resolve the error message from autoUpgrader in User-Agent when the package is not enabled.
 * v1.1.0
   * Updated MDl to v1.1.0.
   * Added css fix for https://github.com/google/material-design-icons/issues/299.
