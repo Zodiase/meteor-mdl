@@ -22,8 +22,11 @@ Package.onUse(function (api) {
     'isobuild:compiler-plugin@1.0.0',
     'fourseven:scss@3.4.1'
   ]);
+  // `check` package is still in testing phase, lock version to prevent BC.
   api.use('zodiase:check@=0.0.4');
+  // MDL Assets package has to match strictly.
   api.imply('zodiase:mdl-assets@=' + assetPackageVersion);
+  // MDI can be freely updated.
   api.imply('zodiase:material-design-icons-fonts@' + mdiVersion);
 
   api.export(['MDl'], 'client');
