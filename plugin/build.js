@@ -61,6 +61,7 @@ class Compiler extends MultiFileCachingCompiler {
         const settingsFromFile = JSON.parse(fileContents);
         finalSettings = extend(true, {}, self.defaultSettings, settingsFromFile);
         check(finalSettings, self.settingsSchema);
+        log('Using settings:', finalSettings);
       } catch (error) {
         settingsFile.error(error);
         finalSettings = null;
@@ -86,7 +87,7 @@ class Compiler extends MultiFileCachingCompiler {
   addCompileResult(inputFile, compileResult) {
     const settingsFile = inputFile;
     const finalSettings = JSON.parse(compileResult);
-    log('Using settings:', finalSettings);
+
     // Attach the settings to MDl.
     settingsFile.addJavaScript({
       data: 'MDl.settings = JSON.parse(decodeURI("' + encodeURI(JSON.stringify(finalSettings)) + '"));\n',
@@ -166,14 +167,12 @@ class Compiler extends MultiFileCachingCompiler {
     const theme = settings.theme;
     if (theme === false) {
       // Disable theme.
-      log('Theme disabled.');
       return;
     }
     //else
 
     // Load theme.
     const themeFileName = this._getThemeFileName(theme.primary, theme.accent);
-    //log(themeFileName);
     const themeFilePath = path.join('dist', themeFileName);
     const themeFileData = this._tryToGetAssetData(inputFile, themeFilePath);
     if (themeFileData === null) {
