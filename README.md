@@ -11,9 +11,9 @@ Material Design Lite for Meteor
 Features
 ------------------------------------------------------------------------------
 
-* **(New!) Theme color customization (See details below.)**
+* **Theme color customization (See details below.)**
 
-* **(New!) Full access to SASS source code (See details below.)**
+* **Full access to SASS source code (See details below.)**
 
 * Exports `componentHandler` globally (Client Only).
 
