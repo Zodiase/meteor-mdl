@@ -26,11 +26,6 @@ Package.onUse(function (api) {
   api.imply('zodiase:mdl-assets@=' + assetPackageVersion);
   api.imply('zodiase:material-design-icons-fonts@=' + mdiVersion);
 
-  log('Warning! Breaking Compatibility!');
-  log('Since version 1.0.6_4, now the settings file IS required. Without it, most of the functions of this package will be turned off!');
-  log('Also if you have been using the SASS assets provided by this package from version 1.0.6_3, now you have to load the assets from package `zodiase:mdl-assets` instead.');
-  log('These are permanent changes. Sorry for the inconvenience!');
-
   api.export(['MDl'], 'client');
 
   api.addFiles([
