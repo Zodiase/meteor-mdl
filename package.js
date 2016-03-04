@@ -6,10 +6,6 @@ var mdiVersion = '2.1.3';
 var packageVersion = (revision > 0) ? mdlVersion + '_' + revision : mdlVersion,
     assetPackageVersion = (assetRevision > 0) ? mdlVersion + '_' + assetRevision : mdlVersion;
 
-Npm.depends({
-  'lru-cache': '2.6.4'
-});
-
 Package.describe({
   name: 'zodiase:mdl',
   version: packageVersion,

@@ -13,10 +13,7 @@ const extend = Npm.require('extend');
 // clone from npm.
 const clone = Npm.require('clone');
 
-const fs = Plugin.fs;
 const path = Plugin.path;
-const createHash = Npm.require('crypto').createHash;
-const LRU = Npm.require('lru-cache');
 
 Plugin.registerCompiler({
   archMatching: 'web',
