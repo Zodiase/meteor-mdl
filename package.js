@@ -6,6 +6,10 @@ var mdiVersion = '2.1.3';
 var packageVersion = (revision > 0) ? mdlVersion + '_' + revision : mdlVersion,
     assetPackageVersion = (assetRevision > 0) ? mdlVersion + '_' + assetRevision : mdlVersion;
 
+Npm.depends({
+  'lru-cache': '2.6.4'
+});
+
 Package.describe({
   name: 'zodiase:mdl',
   version: packageVersion,
@@ -65,6 +69,7 @@ Package.onTest(function (api) {
 Package.registerBuildPlugin({
   name: 'build',
   use: [
+    'caching-compiler',
     'ecmascript',
     'zodiase:check@=0.0.4',
     'zodiase:mdl-assets@=' + assetPackageVersion

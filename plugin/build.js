@@ -13,7 +13,10 @@ const extend = Npm.require('extend');
 // clone from npm.
 const clone = Npm.require('clone');
 
+const fs = Plugin.fs;
 const path = Plugin.path;
+const createHash = Npm.require('crypto').createHash;
+const LRU = Npm.require('lru-cache');
 
 Plugin.registerCompiler({
   archMatching: 'web',
@@ -21,9 +24,91 @@ Plugin.registerCompiler({
   filenames: [settingsFileName]
 }, () => new Compiler);
 
-class Compiler {
-  static tryToGetAssetData(inputFile, assetPath) {
-    let self = Compiler;
+class Compiler extends MultiFileCachingCompiler {
+
+  constructor() {
+    super({
+      compilerName: 'zodiase-mdl',
+      defaultCacheSize: 1024*1024*10,
+    });
+  }
+
+  getCacheKey(inputFile) {
+    return inputFile.getSourceHash();
+  }
+
+  /**
+   * `compileResult` returned by `compileOneFile` is a string.
+   * @param {String} compileResult
+   * @returns {Number}
+   */
+  compileResultSize(compileResult) {
+    return compileResult.length;
+  }
+
+  // We don't care settings files not at root directory.
+  isRoot(inputFile) {
+    return (inputFile.getDirname() === '.');
+  }
+
+  compileOneFile(inputFile, allFiles) {
+    const self = Compiler;
+    const fileContents = inputFile.getContentsAsString().trim();
+    let finalSettings = null;
+
+    if (fileContents === '') {
+      log('Enabled with default settings. See documentation for customization options.');
+      finalSettings = clone(self.defaultSettings, false);
+    } else {
+      try {
+        const settingsFromFile = JSON.parse(fileContents);
+        finalSettings = extend(true, {}, self.defaultSettings, settingsFromFile);
+        check(finalSettings, self.settingsSchema);
+      } catch (error) {
+        settingsFile.error(error);
+        finalSettings = null;
+      }
+    }
+    if (!finalSettings) {
+      return null;
+    }
+    //else
+
+    return {
+      // Use the string form to help calculate cache size.
+      compileResult: JSON.stringify(finalSettings),
+      referencedImportPaths: []
+    };
+  }
+
+  /**
+   * `compileResult` returned by `compileOneFile` is a string.
+   * @param {InputFile} inputFile
+   * @param {String} compileResult Guaranteed to be valid JSON.
+   */
+  addCompileResult(inputFile, compileResult) {
+    const settingsFile = inputFile;
+    const finalSettings = JSON.parse(compileResult);
+    log('Using settings:', finalSettings);
+    // Attach the settings to MDl.
+    settingsFile.addJavaScript({
+      data: 'MDl.settings = JSON.parse(decodeURI("' + encodeURI(JSON.stringify(finalSettings)) + '"));\n',
+      path: path.join('client', 'lib', 'settings-file-checked.generated.js'),
+      bare: true
+    });
+
+    this._loadJsLib(settingsFile, finalSettings);
+    this._loadTheme(settingsFile, finalSettings);
+  }
+
+  /**
+   * Try to get the content of the specified asset.
+   * If fails for any reason, the error will be thrown to the InputFile.
+   * @param {InputFile} inputFile
+   * @param {String} assetPath
+   * @returns {String|null} Text content of the asset if found. Otherwise null.
+   */
+  _tryToGetAssetData(inputFile, assetPath) {
     try {
       return getAsset(assetPath);
     } catch (error) {
@@ -32,40 +117,34 @@ class Compiler {
     }
   }
 
-  static tryToParseAndLoadSettings(settingsFile) {
-    let self = Compiler;
-    let fileContents = settingsFile.getContentsAsString().trim();
-    if (fileContents === '') {
-      log('Enabled with default settings. See documentation for customization options.');
-      return clone(self.defaultSettings, false);
-    }
-    //else
-    try {
-      let settingsFromFile = JSON.parse(fileContents);
-      let finalSettings = extend(true, {}, self.defaultSettings, settingsFromFile);
-      check(finalSettings, self.settingsSchema);
-      return finalSettings;
-    } catch (error) {
-      settingsFile.error(error);
-      return null;
-    }
-  }
-
-  static getThemeFileName(primary, accent) {
+  /**
+   * Returns the full theme file name for the given color combination.
+   * @param {String} primary
+   * @param {String} accent
+   * @returns {String}
+   */
+  _getThemeFileName(primary, accent) {
     return 'material.' + path.basename(primary) + '-' + path.basename(accent) + '.min.css';
   }
 
-  static loadJsLib(inputFile, settings) {
-    let self = Compiler;
-    let jsLibFileName = settings.jsLib.minified ? 'material.min.js' : 'material.js';
-    let jsLibFilePath = path.join('dist', jsLibFileName);
-    let jsLibFileData = self.tryToGetAssetData(inputFile, jsLibFilePath);
+  /**
+   * Add js files to the InputFile based on the settings.
+   * @param {InputFile} inputFile
+   * @param {Object} settings
+   * @param {Object} settings.jsLib
+   * @param {Boolean} settings.jsLib.minified
+   */
+  _loadJsLib(inputFile, settings) {
+    const jsLibFileName = settings.jsLib.minified ? 'material.min.js' : 'material.js';
+    const jsLibFilePath = path.join('dist', jsLibFileName);
+    const jsLibFileData = this._tryToGetAssetData(inputFile, jsLibFilePath);
     if (jsLibFileData === null) {
       // Has error getting the asset.
       inputFile.error(new Error('Could not load JavaScript lib file.'));
       return;
     }
     //else
+
     inputFile.addJavaScript({
       data: jsLibFileData,
       path: path.join('client', 'lib', jsLibFilePath),
@@ -78,9 +157,16 @@ class Compiler {
     });
   }
 
-  static loadTheme(inputFile, settings) {
-    let self = Compiler;
-    let theme = settings.theme;
+  /**
+   * Add css files to the InputFile based on the settings.
+   * @param {InputFile} inputFile
+   * @param {Object} settings
+   * @param {Object|false} settings.theme
+   * @param {String} settings.theme.primary
+   * @param {String} settings.theme.accent
+   */
+  _loadTheme(inputFile, settings) {
+    const theme = settings.theme;
     if (theme === false) {
       // Disable theme.
       log('Theme disabled.');
@@ -89,87 +175,22 @@ class Compiler {
     //else
 
     // Load theme.
-    let themeFileName = self.getThemeFileName(theme.primary, theme.accent);
+    const themeFileName = this._getThemeFileName(theme.primary, theme.accent);
     //log(themeFileName);
-    let themeFilePath = path.join('dist', themeFileName);
-    let themeFileData = self.tryToGetAssetData(inputFile, themeFilePath);
+    const themeFilePath = path.join('dist', themeFileName);
+    const themeFileData = this._tryToGetAssetData(inputFile, themeFilePath);
     if (themeFileData === null) {
       // Has error getting the asset.
       inputFile.error(new Error('Could not load theme stylesheet.'));
       return;
     }
     //else
+
     inputFile.addStylesheet({
       data: themeFileData,
       path: path.join('client', 'lib', themeFilePath),
       bare: true
     });
-  }
-
-  processFilesForTarget(files) {
-    let self = Compiler;
-
-    let settingsFile = null;
-
-    for (let file of files) {
-      /*
-       * .getContentsAsBuffer() - Returns the full contents of the file as a buffer.
-       * .getContentsAsString() - Returns the full contents of the file as a string.
-       * .getPackageName() - Returns the name of the package or null if the file is not in a package.
-       * .getPathInPackage() - Returns the relative path of file to the package or app root directory. The returned path always uses forward slashes.
-       * .getSourceHash() - Returns a hash string for the file that can be used to implement caching.
-       * .getArch() - Returns the architecture that is targeted while processing this file.
-       * .getBasename() - Returns the filename of the file.
-       * .getDirname() - Returns the directory path relative to the package or app root. The returned path always uses forward slashes.
-       * .error() - Call this method to raise a compilation or linting error for the file.
-       * .getExtension() - Returns the extension that matched the compiler plugin. The longest prefix is preferred.
-       * .getDeclaredExports() - Returns a list of symbols declared as exports in this target. The result of api.export('symbol') calls in target's control file such as package.js.
-       * .getDisplayPath() Returns a relative path that can be used to form error messages or other display properties. Can be used as an input to a source map.
-       * .addStlyesheet() - Web targets only. Add a stylesheet to the document. Not available for linter build plugins.
-       * .addJavaScript() - Add JavaScript code. The code added will only see the namespaces imported by this package as runtime dependencies using 'api.use'. If the file being compiled was added with the bare flag, the resulting JavaScript won't be wrapped in a closure.
-       * .addAsset() - Add a file to serve as-is to the browser or to include on the browser, depending on the target. On the web, it will be served at the exact path requested. For server targets, it can be retrieved using Assets.getText or Assets.getBinary.
-       * .addHtml() - Works in web targets only. Add markup to the head or body section of the document.
-       */
-      let basename = file.getBasename(),
-          dirname = file.getDirname();
-
-      // Settings file only allowed at root.
-      if (dirname !== '.') {
-        file.error(new Error('Please place the settings file at the root of the app.'));
-        continue;
-      }
-      //else
-
-      // Duplicate file found.
-      if (settingsFile !== null) {
-        file.error(new Error('Please do not use more than one settings file.'));
-        continue;
-      }
-      //else
-
-      settingsFile = file;
-    }
-
-    // It is possible settingsFile === null.
-    if (settingsFile === null) {
-      // Settings file not found. Can not proceed.
-    } else {
-      let finalSettings = self.tryToParseAndLoadSettings(settingsFile);
-      if (finalSettings === null) {
-        // Has error parsing the settings.
-      } else {
-        log('Using settings:', finalSettings);
-        // Attach the settings to MDl.
-        settingsFile.addJavaScript({
-          data: 'MDl.settings = JSON.parse(decodeURI("' + encodeURI(JSON.stringify(finalSettings)) + '"));\n',
-          path: path.join('client', 'lib', 'settings-file-checked.generated.js'),
-          bare: true
-        });
-
-        self.loadJsLib(settingsFile, finalSettings);
-        self.loadTheme(settingsFile, finalSettings);
-      }
-    }
   }
 }
 Compiler.defaultSettings = {
