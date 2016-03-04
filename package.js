@@ -24,7 +24,7 @@ Package.onUse(function (api) {
   ]);
   api.use('zodiase:check@=0.0.4');
   api.imply('zodiase:mdl-assets@=' + assetPackageVersion);
-  api.imply('zodiase:material-design-icons-fonts@=' + mdiVersion);
+  api.imply('zodiase:material-design-icons-fonts@' + mdiVersion);
 
   api.export(['MDl'], 'client');
 
