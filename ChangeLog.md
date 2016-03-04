@@ -1,5 +1,8 @@
 Change Log
 ------------------------------------------------------------------------------
+* v1.1.1_1
+  * I know it is super annoying to seeing the log about the active settings every time when you make a change that's not relevant to this package. Now you won't see that ever again. The log only shows up when you actually change the settings file.
+  * I think by now everybody should be aware of the BC issue so I removed the BC warning logs. Even fewer logs!
 * v1.1.1
   * Updated MDl to v1.1.1.
   * Fix the error when building for cordova.
