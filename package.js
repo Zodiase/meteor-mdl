@@ -9,7 +9,7 @@ var packageVersion = (revision > 0) ? mdlVersion + '_' + revision : mdlVersion,
 Package.describe({
   name: 'zodiase:mdl',
   version: packageVersion,
-  summary: 'A wrapper package for Google\'s Material Design Lite.',
+  summary: 'Google\'s Material Design Lite for Meteor, with auto-upgrading and theme customization support. SASS source also available.',
   git: 'https://github.com/Zodiase/meteor-mdl.git',
   documentation: 'README.md'
 });
