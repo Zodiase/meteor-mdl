@@ -1,5 +1,7 @@
 Change Log
 ------------------------------------------------------------------------------
+* v1.1.2_1
+  * Updated package summary for better branding.
 * v1.1.2
   * Updated MDl to v1.1.2.
   * Updated MDi to v2.2.0.
