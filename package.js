@@ -1,6 +1,6 @@
 var mdlVersion = '1.1.2';
-var revision = 1;
-var assetRevision = 0;
+var revision = 2;
+var assetRevision = 1;
 var mdiVersion = '2.2.0';
 
 var packageVersion = (revision > 0) ? mdlVersion + '_' + revision : mdlVersion,
