@@ -1,5 +1,8 @@
 Change Log
 ------------------------------------------------------------------------------
+* v1.1.3
+  * Updated MDl to v1.1.3.
+  * Updated MDi to v2.2.1.
 * v1.1.2_2
   * Updated MDl assets to v1.1.2_1, which removed unnecessary client side assets to reduce package footprint especially if you are using asset caching packages such as `appcache`.
 * v1.1.2_1

@@ -80,6 +80,6 @@ velocity:shim@0.1.0
 webapp@1.2.3
 webapp-hashing@1.0.5
 zodiase:check@0.0.4
-zodiase:material-design-icons-fonts@2.2.0
-zodiase:mdl@1.1.2_2
-zodiase:mdl-assets@1.1.2_1
+zodiase:material-design-icons-fonts@2.2.1
+zodiase:mdl@1.1.3
+zodiase:mdl-assets@1.1.3
