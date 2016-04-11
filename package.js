@@ -31,6 +31,11 @@ Package.onUse(function (api) {
 
   api.export(['MDl'], 'client');
 
+  // Polyfill for MutationObserver.
+  api.addFiles([
+    'node_modules/webcomponents.js/MutationObserver.min.js'
+  ], 'client');
+
   api.addFiles([
     'setup.js',
     'check.js'
