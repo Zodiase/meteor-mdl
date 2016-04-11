@@ -13,7 +13,7 @@ git branch -D release
 git checkout -b release
 
 # Remove unnecessary files.
-rm -f ForEachUpdate.md package.json
+rm -f ForEachUpdate.md
 rm -rf integration-tests node_modules scripts
 
 # Commit changes.
