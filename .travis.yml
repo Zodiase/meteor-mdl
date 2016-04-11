@@ -7,4 +7,4 @@ before_script:
   - "export PATH=$HOME/.meteor:$PATH"
   - "rm -rf integration-tests"
 script:
-  - "make test"
+  - "meteor test-packages ./ --release 1.2.1"
