@@ -1,5 +1,7 @@
 Change Log
 ------------------------------------------------------------------------------
+* v1.1.3_1
+  * Added MutationObserver polyfill for IE9 support.
 * v1.1.3
   * Updated MDl to v1.1.3.
   * Updated MDi to v2.2.1.
