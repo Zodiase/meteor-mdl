@@ -5,3 +5,4 @@ before_install:
   - "curl -L http://git.io/ejPSng | /bin/sh"
 before_script:
   - "export PATH=$HOME/.meteor:$PATH"
+  - "rm -rf integration-tests"
