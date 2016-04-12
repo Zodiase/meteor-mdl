@@ -49,6 +49,21 @@ class Compiler extends MultiFileCachingCompiler {
   }
 
   compileOneFile(inputFile, allFiles) {
+    log('check 1', {
+      SourceHash: inputFile.getSourceHash(),
+      Arch: inputFile.getArch(),
+      PackageName: inputFile.getPackageName(),
+      PathInPackage: inputFile.getPathInPackage(),
+      Basename: inputFile.getBasename(),
+      Dirname: inputFile.getDirname(),
+      ContentsAsString: inputFile.getContentsAsString().substr(0, 30)
+    });
+/*
+    if (null === inputFile.getPackageName()) {
+      return null;
+    }
+*/
+
     const self = Compiler;
     const fileContents = inputFile.getContentsAsString().trim();
     let finalSettings = null;
@@ -85,6 +100,17 @@ class Compiler extends MultiFileCachingCompiler {
    * @param {String} compileResult Guaranteed to be valid JSON.
    */
   addCompileResult(inputFile, compileResult) {
+    log('check 2', {
+      SourceHash: inputFile.getSourceHash(),
+      Arch: inputFile.getArch(),
+      PackageName: inputFile.getPackageName(),
+      PathInPackage: inputFile.getPathInPackage(),
+      Basename: inputFile.getBasename(),
+      Dirname: inputFile.getDirname(),
+      ContentsAsString: inputFile.getContentsAsString().substr(0, 30)
+    });
+
+
     const settingsFile = inputFile;
     const finalSettings = JSON.parse(compileResult);
 
