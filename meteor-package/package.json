@@ -7,8 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "npm install && meteor test-packages ./ --release 1.2.1",
-    "publish": "npm install && meteor publish --release 1.2.1"
+    "test": "npm install && meteor test-packages ./ --release 1.2.1"
   },
   "repository": {
     "type": "git",
