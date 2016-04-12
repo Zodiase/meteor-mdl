@@ -6,7 +6,7 @@ var mdiVersion = '2.2.1';
 var packageVersion = (revision > 0) ? mdlVersion + '_' + revision : mdlVersion,
     assetPackageVersion = (assetRevision > 0) ? mdlVersion + '_' + assetRevision : mdlVersion;
 
-var pkgName = 'mdl';
+var pkgName = 'mdl-edge';
 
 Package.describe({
   name: 'zodiase:' + pkgName,
