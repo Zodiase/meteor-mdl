@@ -17,6 +17,9 @@ git branch -D $RLSBRANCH
 # Create new release branch (with local changes).
 git checkout -b $RLSBRANCH
 
+# Clean-up not tracked files.
+git clean -fdx
+
 # Remove unnecessary files.
 rm -f ForEachUpdate.md
 rm -rf integration-tests node_modules scripts
