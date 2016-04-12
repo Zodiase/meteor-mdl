@@ -14,10 +14,6 @@ blaze-html-templates
 session
 jquery
 tracker
-logging
-reload
-random
-ejson
-spacebars
-check
 zodiase:mdl-edge
+ecmascript
+es5-shim

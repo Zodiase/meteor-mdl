@@ -14,14 +14,10 @@ meteor-base
 mobile-experience
 mongo
 blaze-html-templates
-session
 jquery
 tracker
-logging
-reload
-random
-ejson
-spacebars
-check
 fourseven:scss
 zodiase:mdl-edge
+ecmascript
+es5-shim
+session
