@@ -21,6 +21,13 @@ Plugin.registerCompiler({
   filenames: [settingsFileName]
 }, () => new Compiler);
 
+/*
+ * Check for packages under local testing.
+ * @see {@link https://github.com/meteor/meteor/blob/be986fd70926c9dd8eff6d8866205f236c8562c4/tools/isobuild/package-source.js#L28}
+ */
+const AUTO_TEST_PREFIX = "local-test:",
+      isTestName = (name) => name.slice(0, AUTO_TEST_PREFIX.length) === AUTO_TEST_PREFIX;
+
 class Compiler extends MultiFileCachingCompiler {
 
   constructor() {
@@ -48,21 +55,23 @@ class Compiler extends MultiFileCachingCompiler {
     return (inputFile.getDirname() === '.');
   }
 
+  /**
+   * Returning `null` will skip `addCompileResult` as of Meteor 1.3.1.
+   * @param {InputFile} inputFile
+   * @param {Map.<AbsPath, InputFile>} allFiles
+   * @returns {Object|null}
+   */
   compileOneFile(inputFile, allFiles) {
-    log('check 1', {
-      SourceHash: inputFile.getSourceHash(),
-      Arch: inputFile.getArch(),
-      PackageName: inputFile.getPackageName(),
-      PathInPackage: inputFile.getPathInPackage(),
-      Basename: inputFile.getBasename(),
-      Dirname: inputFile.getDirname(),
-      ContentsAsString: inputFile.getContentsAsString().substr(0, 30)
-    });
-/*
-    if (null === inputFile.getPackageName()) {
+    /*
+     * If the settings file is loaded from the app, the package name should be `null`.
+     * If the settings file is loaded from package tests, `isTestName` should return true.
+     */
+    const pkgName = inputFile.getPackageName();
+    if (!(pkgName === null || isTestName(pkgName))) {
+      // Settings files loaded from packages are ignored.
+      log('Settings file ignored: ' + `{${pkgName}}/${inputFile.getPathInPackage()}`);
       return null;
     }
-*/
 
     const self = Compiler;
     const fileContents = inputFile.getContentsAsString().trim();
@@ -100,16 +109,16 @@ class Compiler extends MultiFileCachingCompiler {
    * @param {String} compileResult Guaranteed to be valid JSON.
    */
   addCompileResult(inputFile, compileResult) {
-    log('check 2', {
-      SourceHash: inputFile.getSourceHash(),
-      Arch: inputFile.getArch(),
-      PackageName: inputFile.getPackageName(),
-      PathInPackage: inputFile.getPathInPackage(),
-      Basename: inputFile.getBasename(),
-      Dirname: inputFile.getDirname(),
-      ContentsAsString: inputFile.getContentsAsString().substr(0, 30)
-    });
-
+    /*
+     * If the settings file is loaded from the app, the package name should be `null`.
+     * If the settings file is loaded from package tests, `isTestName` should return true.
+     */
+    const pkgName = inputFile.getPackageName();
+    if (!(pkgName === null || isTestName(pkgName))) {
+      // Settings files loaded from packages are ignored.
+      // Already logged in `compileOneFile`. Ignore silently.
+      return;
+    }
 
     const settingsFile = inputFile;
     const finalSettings = JSON.parse(compileResult);
