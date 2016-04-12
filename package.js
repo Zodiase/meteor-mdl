@@ -6,8 +6,10 @@ var mdiVersion = '2.2.1';
 var packageVersion = (revision > 0) ? mdlVersion + '_' + revision : mdlVersion,
     assetPackageVersion = (assetRevision > 0) ? mdlVersion + '_' + assetRevision : mdlVersion;
 
+var pkgName = 'mdl';
+
 Package.describe({
-  name: 'zodiase:mdl',
+  name: 'zodiase:' + pkgName,
   version: packageVersion,
   summary: 'Google Material Design Lite for Meteor, with auto-upgrading, theme customization and SASS support.',
   git: 'https://github.com/Zodiase/meteor-mdl.git',
@@ -56,7 +58,7 @@ Package.onTest(function (api) {
     'tinytest',
     'jquery',
     'zodiase:function-bind@0.0.1', // Polyfill for PhantomJS.
-    'zodiase:mdl'
+    'zodiase:' + pkgName
   ]);
   api.addFiles([
     'zodiase-mdl.json',
@@ -82,7 +84,7 @@ Package.registerBuildPlugin({
   }
 });
 
-var logLabel = 'zodiase:mdl';
+var logLabel = 'zodiase:' + pkgName;
 var log = function () {
   var args = sliceArguments(arguments);
   args.unshift('*', logLabel, '>');
