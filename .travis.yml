@@ -2,6 +2,7 @@ language: node_js
 node_js:
   - "0.12"
 before_install:
+  - "cd meteor-package"
   - "curl -L http://git.io/ejPSng | /bin/sh"
 before_script:
   - "export PATH=$HOME/.meteor:$PATH"

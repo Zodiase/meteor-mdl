@@ -22,7 +22,7 @@ git clean -fdx
 
 # Remove unnecessary files.
 rm -f ForEachUpdate.md
-rm -rf integration-tests node_modules scripts
+rm -rf integration-tests meteor-package/node_modules scripts
 
 # Commit changes.
 git commit -am  "Release cleanup."

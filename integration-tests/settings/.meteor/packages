@@ -21,8 +21,8 @@ insecure                # Allow all DB writes from clients (for prototyping)
 coffeescript
 ejson
 less
-zodiase:mdl
 zodiase:mdl-assets
 zodiase:check
 zodiase:material-design-icons-fonts
 appcache
+zodiase:mdl-edge

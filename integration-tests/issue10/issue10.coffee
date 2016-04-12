@@ -1,6 +1,13 @@
 Data = new Mongo.Collection 'content'
 
 if Meteor.isServer
+  Data.remove({})
+  for x in [0...5]
+    Data.insert {
+      "name": "Sample #{x}"
+      "content": "Sample Content"
+    }
+
   Meteor.startup () ->
     Meteor.publish 'content', () ->
       return Data.find()
@@ -9,9 +16,9 @@ if Meteor.isServer
 
 if Meteor.isClient
   Meteor.subscribe('content')
-  
+
   tpl = Template['issue10']
-  
+
   showAddPanel = (tpl) ->
     tpl.$('.page').addClass('addpanel-expanded')
     return true
@@ -26,29 +33,22 @@ if Meteor.isClient
   focusAddPanel = (tpl) ->
     tpl.$('.addpanel .input-add-name').focus()
     return true
-  
+
   checkMDLCheckbox = ($mdlCheckbox, checked) ->
     $mdlCheckbox.find('input[type=checkbox]').prop('checked', checked)
     $mdlCheckbox[if checked then 'addClass' else 'removeClass']('is-checked')
     return true
-  
+
   tpl.onRendered (tpl) ->
     tpl = this
     return true
   #tpl.onRendered/
-  
+
   tpl.helpers
     data: () ->
       return Data.find()
-  
+
   tpl.events
-    'change .toggle-visibility': (event, tpl) ->
-      target = event.currentTarget
-      _id = target.getAttribute('data-id')
-      visible = target.checked
-      #console.log(_id, visible)
-      Data.update _id, $set: visible: visible
-      return false
     'click .button-delete': (event, tpl) ->
       target = event.currentTarget
       _id = target.getAttribute('data-id')
@@ -67,16 +67,6 @@ if Meteor.isClient
       showAddPanel(tpl)
       focusAddPanel(tpl)
       return false
-    'input .addpanel textarea': (event, tpl) ->
-      console.log('change .addpanel textarea')
-      target = event.currentTarget
-      newRows = target.value.split('\n').length
-      target.rows = newRows if target.rows != newRows
-      if target.rows > 1
-        target.classList.add('is-fat')
-      else
-        target.classList.remove('is-fat')
-      return false
     'click .addpanel .button-cancel': (event, tpl) ->
       resetAddPanel(tpl)
       hideAddPanel(tpl)
@@ -86,16 +76,12 @@ if Meteor.isClient
       $form = tpl.$(event.currentTarget)
       name = String($form.find('.input-add-name').val()).trim()
       content = String($form.find('.input-add-content').val()).trim()
-      keywords = String($form.find('.input-add-keywords').val()).trim().split('\n')
-      visible = $form.find('.input-add-visible').prop('checked')
       if name.length == 0
         focusAddPanel(tpl)
       else
         Data.insert {
           "name": name
           "content": content
-          "keywords": keywords
-          "visible": visible
         }
         resetAddPanel(tpl)
         hideAddPanel(tpl)
