@@ -1,5 +1,9 @@
 #!/bin/bash
 
+################################################################################
+# This script cleans up the repo and creates a new branch for releasing.
+################################################################################
+
 SRCBRANCH="dev"
 RLSBRANCH="dev-release"
 

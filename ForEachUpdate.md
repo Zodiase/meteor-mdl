@@ -13,6 +13,6 @@ This is a note to myself about the tasks to perform for each update.
 9. Update `README.md`.
 10. Update `ChangeLog.md`.
 11. Push changes in `master`.
-12. Clean up files for release with `scripts/releasecleanup.sh`.
+12. Clean up files for release with `scripts/release-cleanup.sh`.
 13. Push changes in `release`.
 14. Publish with `meteor publish`.
