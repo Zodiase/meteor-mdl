@@ -1,10 +1,14 @@
 {
   "dependencies": {
     "clone": {
-      "version": "1.0.2"
+      "version": "1.0.2",
+      "resolved": "https://registry.npmjs.org/clone/-/clone-1.0.2.tgz",
+      "from": "clone@1.0.2"
     },
     "extend": {
-      "version": "3.0.0"
+      "version": "3.0.0",
+      "resolved": "https://registry.npmjs.org/extend/-/extend-3.0.0.tgz",
+      "from": "extend@3.0.0"
     }
   }
 }
