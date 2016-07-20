@@ -22,7 +22,7 @@ Package.onUse(function (api) {
   api.use([
     'ecmascript',
     'isobuild:compiler-plugin@1.0.0',
-    'fourseven:scss@3.8.0'
+    'fourseven:scss@3.8.0_1'
   ]);
   // `check` package is still in testing phase, lock version to prevent BC.
   api.use('zodiase:check@=0.0.4');
