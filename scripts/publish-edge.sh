@@ -4,7 +4,7 @@
 # This script publishes the edge version.
 ################################################################################
 
-RLSVER=1.2.1
+RLSVER=1.3.5
 
 SCRIPTDIR="$(dirname "$0")"
 ROOTDIR="${SCRIPTDIR}/../"

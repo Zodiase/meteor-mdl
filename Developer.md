@@ -22,3 +22,15 @@
 - reset-all.sh - This script resets all integration test apps.
 
 ## Dependencies
+- Meteor packages
+    - `caching-compiler`
+    - `ecmascript`
+    - `fourseven:scss`
+    - `isobuild:compiler-plugin`
+    - `zodiase:check`
+    - `zodiase:material-design-icons-fonts`
+    - `zodiase:mdl-assets`
+- NPM packages
+    - `clone`
+    - `extend`
+    - `webcomponents.js`
