@@ -7,6 +7,6 @@ before_install:
 before_script:
   - "export PATH=$HOME/.meteor:$PATH"
   - "rm -rf integration-tests"
-  - "export METEOR_RELEASE=1.2.1"
+  - "export METEOR_RELEASE=1.3.5"
 script:
   - "make test"
