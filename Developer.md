@@ -1,5 +1,4 @@
-This is a note to myself about the tasks to perform for each update.
-
+## For Each Update
 1. MDL sources are provided by a separate package `zodiase:mdl-assets`.
 4. MDI fonts are provided by a separate package `zodiase:material-design-icons-fonts`.
 5. Bump version in `package.js`.
@@ -16,3 +15,10 @@ This is a note to myself about the tasks to perform for each update.
 12. Clean up files for release with `scripts/release-cleanup.sh`.
 13. Push changes in `release`.
 14. Publish with `meteor publish`.
+
+## Scripts
+- publish-edge.sh - This script publishes the edge version.
+- release-cleanup.sh - This script cleans up the repo and creates a new branch for releasing.
+- reset-all.sh - This script resets all integration test apps.
+
+## Dependencies
