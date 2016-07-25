@@ -22,6 +22,6 @@ ejson
 less
 fourseven:scss
 appcache
-zodiase:mdl-edge
 standard-minifier-css
 standard-minifier-js
+zodiase:mdl

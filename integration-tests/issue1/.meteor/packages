@@ -13,8 +13,8 @@ blaze-html-templates
 session
 jquery
 tracker
-zodiase:mdl-edge
 ecmascript
 es5-shim
 standard-minifier-css
 standard-minifier-js
+zodiase:mdl

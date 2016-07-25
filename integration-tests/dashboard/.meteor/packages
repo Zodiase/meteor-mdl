@@ -16,9 +16,9 @@ blaze-html-templates
 jquery
 tracker
 fourseven:scss
-zodiase:mdl-edge
 ecmascript
 es5-shim
 session
 standard-minifier-css
 standard-minifier-js
+zodiase:mdl
