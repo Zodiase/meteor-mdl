@@ -1,5 +1,7 @@
 Change Log
 ------------------------------------------------------------------------------
+* v1.1.3_3
+    * Publishing previous version resulted in `Error: write EPIPE`. Trying again.
 * v1.1.3_2
     * Updated dependency versions.
 * v1.1.3_1
