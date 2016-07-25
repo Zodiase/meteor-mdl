@@ -6,7 +6,6 @@
 
 coffeescript
 less
-standard-minifiers
 meteor-base
 mobile-experience
 mongo
@@ -18,3 +17,5 @@ zodiase:mdl-edge
 ecmascript
 es5-shim
 insecure
+standard-minifier-css
+standard-minifier-js

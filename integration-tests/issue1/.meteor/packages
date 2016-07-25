@@ -6,7 +6,6 @@
 
 mike:mocha
 coffeescript
-standard-minifiers
 meteor-base
 mobile-experience
 mongo
@@ -17,3 +16,5 @@ tracker
 zodiase:mdl-edge
 ecmascript
 es5-shim
+standard-minifier-css
+standard-minifier-js
