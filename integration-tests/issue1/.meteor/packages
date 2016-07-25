@@ -6,7 +6,6 @@
 
 mike:mocha
 coffeescript
-standard-minifiers
 meteor-base
 mobile-experience
 mongo
@@ -14,10 +13,8 @@ blaze-html-templates
 session
 jquery
 tracker
-logging
-reload
-random
-ejson
-spacebars
-check
+ecmascript
+es5-shim
+standard-minifier-css
+standard-minifier-js
 zodiase:mdl

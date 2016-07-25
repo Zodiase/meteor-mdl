@@ -1,83 +1,83 @@
 Change Log
 ------------------------------------------------------------------------------
 * v1.1.3_1
-  * Added MutationObserver polyfill for IE9 support.
+    * Added MutationObserver polyfill for IE9 support.
 * v1.1.3
-  * Updated MDl to v1.1.3.
-  * Updated MDi to v2.2.1.
+    * Updated MDl to v1.1.3.
+    * Updated MDi to v2.2.1.
 * v1.1.2_2
-  * Updated MDl assets to v1.1.2_1, which removed unnecessary client side assets to reduce package footprint especially if you are using asset caching packages such as `appcache`.
+    * Updated MDl assets to v1.1.2_1, which removed unnecessary client side assets to reduce package footprint especially if you are using asset caching packages such as `appcache`.
 * v1.1.2_1
-  * Updated package summary for better branding.
+    * Updated package summary for better branding.
 * v1.1.2
-  * Updated MDl to v1.1.2.
-  * Updated MDi to v2.2.0.
+    * Updated MDl to v1.1.2.
+    * Updated MDi to v2.2.0.
 * v1.1.1_1
-  * I know it is super annoying to seeing the log about the active settings every time when you make a change that's not relevant to this package. Now you won't see that ever again. The log only shows up when you actually change the settings file.
-  * I think by now everybody should be aware of the BC issue so I removed the BC warning logs. Even fewer logs!
+    * I know it is super annoying to seeing the log about the active settings every time when you make a change that's not relevant to this package. Now you won't see that ever again. The log only shows up when you actually change the settings file.
+    * I think by now everybody should be aware of the BC issue so I removed the BC warning logs. Even fewer logs!
 * v1.1.1
-  * Updated MDl to v1.1.1.
-  * Fix the error when building for cordova.
-  * Fix the exception when no valid settings file is found.
-  * Resolve the error message from autoUpgrader in User-Agent when the package is not enabled.
+    * Updated MDl to v1.1.1.
+    * Fix the error when building for cordova.
+    * Fix the exception when no valid settings file is found.
+    * Resolve the error message from autoUpgrader in User-Agent when the package is not enabled.
 * v1.1.0
-  * Updated MDl to v1.1.0.
-  * Added css fix for https://github.com/google/material-design-icons/issues/299.
-  * Renamed blaze patcher to autoUpgrade and attached it to MDl.
-  * Enabled configuring auto-upgrader (blaze patcher) with the settings file.
+    * Updated MDl to v1.1.0.
+    * Added css fix for https://github.com/google/material-design-icons/issues/299.
+    * Renamed blaze patcher to autoUpgrade and attached it to MDl.
+    * Enabled configuring auto-upgrader (blaze patcher) with the settings file.
 * v1.0.6_7
-  * Lock down critical dependencies to prevent things like loading mdl-asset 1.1.0 or higher.
+    * Lock down critical dependencies to prevent things like loading mdl-asset 1.1.0 or higher.
 * v1.0.6_6
-  * Corrected SASS example in README.
+    * Corrected SASS example in README.
 * v1.0.6_5
-  * I forgot to clean up the release, causing v1.0.6_4 to be VERY large. So I'm re-publishing. Take this as v1.0.6_4.
+    * I forgot to clean up the release, causing v1.0.6_4 to be VERY large. So I'm re-publishing. Take this as v1.0.6_4.
 * v1.0.6_4
-  * Fixed the issue when added from atmosphere the settings file is ineffective.
-  * Unfortunately this update has to break compatibility.
-  * Due to the changes to how the settings file is captured and handled, now the settings file is required for the package to function. Otherwise only the material design icons font will be effective.
-  * If no settings file is found, in the client side console there will be a warning for you to add the settings file.
-  * Refactored mdl assets and material design icons into dedicated packages.
-  * From now on, load SASS sources from package `zodiase:mdl-assets` instead. However, you should still do `@import '{zodiase:mdl}/theme'`.
+    * Fixed the issue when added from atmosphere the settings file is ineffective.
+    * Unfortunately this update has to break compatibility.
+    * Due to the changes to how the settings file is captured and handled, now the settings file is required for the package to function. Otherwise only the material design icons font will be effective.
+    * If no settings file is found, in the client side console there will be a warning for you to add the settings file.
+    * Refactored mdl assets and material design icons into dedicated packages.
+    * From now on, load SASS sources from package `zodiase:mdl-assets` instead. However, you should still do `@import '{zodiase:mdl}/theme'`.
 * v1.0.6_3
-  * Added support for settings.
-  * Added support for theme customization.
-  * Added support for accessing to MDL SASS source files.
+    * Added support for settings.
+    * Added support for theme customization.
+    * Added support for accessing to MDL SASS source files.
 * v1.0.6_2
-	* Updated font updating script to support meteor apps not located at root.
+    * Updated font updating script to support meteor apps not located at root.
 * v1.0.6_1
-	* Revised the method used to include material icons fonts. Now they won't be loaded unless browser decides to. Since this change requires `api.addAssets` which is only available after Meteor 1.2, release dependency is updated.
-	* Won't be compatible with Meteor release prior to 1.2.1.
+    * Revised the method used to include material icons fonts. Now they won't be loaded unless browser decides to. Since this change requires `api.addAssets` which is only available after Meteor 1.2, release dependency is updated.
+    * Won't be compatible with Meteor release prior to 1.2.1.
 * v1.0.6
-	* Updated MDl to v1.0.6.
+    * Updated MDl to v1.0.6.
 * v1.0.5
-	* Updated MDl to v1.0.5.
+    * Updated MDl to v1.0.5.
 * v1.0.4
-	* Updated MDl to v1.0.4.
-	* Deprecated the Iron:Router patcher.
+    * Updated MDl to v1.0.4.
+    * Deprecated the Iron:Router patcher.
 * v1.0.3
     * Updated MDl to v1.0.3.
 * v1.0.2-2
-	* Improved support for webkit browsers.
-	* Added TrueType font for Safari.
-	* Fixed blaze patcher for Safari.
+    * Improved support for webkit browsers.
+    * Added TrueType font for Safari.
+    * Fixed blaze patcher for Safari.
 * v1.0.2-1
-	* Included Material Icons Typeface file in the package so your app can go completely offline.
+    * Included Material Icons Typeface file in the package so your app can go completely offline.
 * v1.0.2
-	* Updated MDl to v1.0.2.
-	* Converted demos into integration tests.
+    * Updated MDl to v1.0.2.
+    * Converted demos into integration tests.
 * v1.0.1-1
-	* Added `material-grid.css`.
+    * Added `material-grid.css`.
 * v1.0.1
-	* Updated MDl to v1.0.1.
-	* Minor performance tweaks.
+    * Updated MDl to v1.0.1.
+    * Minor performance tweaks.
 * v1.0.0-4
-	* Updated `material.js` with another custom build, adding the ability to do `componentHandler.upgradeAllRegistered(rootNode)`. Check out [my MDL fork](https://github.com/Zodiase/material-design-lite) for details.
-	* Added a namespace `MDl` while maintaining `componentHandler` available globally. You can also use `Mdl.componentHandler` if it looks better.
-	* `MDl.envConfig` stores runtime status generated by the package and public APIs for extensive features (to be added).
+    * Updated `material.js` with another custom build, adding the ability to do `componentHandler.upgradeAllRegistered(rootNode)`. Check out [my MDL fork](https://github.com/Zodiase/material-design-lite) for details.
+    * Added a namespace `MDl` while maintaining `componentHandler` available globally. You can also use `Mdl.componentHandler` if it looks better.
+    * `MDl.envConfig` stores runtime status generated by the package and public APIs for extensive features (to be added).
 * v1.0.0-3
-	* Slightly improved blaze patcher.
+    * Slightly improved blaze patcher.
 * v1.0.0-2
-	* Fixed a bug causing build to fail. 
+    * Fixed a bug causing build to fail. 
 * v1.0.0-1
-	* Started using `MutationObserver` to detect changes in DOM and then call MDL's `componentHandler.upgradeAllRegistered()`.
-	* If `MutationObserver` is not available, falls back to the old (buggy) approach.
+    * Started using `MutationObserver` to detect changes in DOM and then call MDL's `componentHandler.upgradeAllRegistered()`.
+    * If `MutationObserver` is not available, falls back to the old (buggy) approach.
