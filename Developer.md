@@ -12,11 +12,12 @@
 9. Fix bugs if needed.
 10. Update `README.md`.
 11. Update `ChangeLog.md`.
-12. Update `scripts/publish-edge.sh` and use it for publishing edge releases.
-13. Push changes in `master`.
-14. Clean up files for release with `scripts/release-cleanup.sh`.
-15. Push changes in `release`.
-16. Publish with `meteor publish`.
+12. Update `.travis.yml`.
+13. Update `scripts/publish-edge.sh` and use it for publishing edge releases.
+14. Push changes in `master`.
+15. Clean up files for release with `scripts/release-cleanup.sh`.
+16. Push changes in `release`.
+17. Publish with `meteor publish`.
 
 ## Scripts
 - publish-edge.sh - This script publishes the edge version.
