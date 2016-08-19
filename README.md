@@ -35,7 +35,7 @@ $ meteor add zodiase:mdl
 
 How to Use
 ------------------------------------------------------------------------------
-**(Important change since version `1.0.6_4`)** After installing, create an empty settings file `zodiase-mdl.json` under the root of your app. **Without it most functions will be disabled.**
+After installing, create an empty settings file `zodiase-mdl.json` under the root of your app. **Without it most functions will be disabled.**
 
 Other than that, there is nothing special to do. Enjoy! :D
 
@@ -85,9 +85,9 @@ You can load up the SASS source code and define your own colors!
 
 3. There you go!
 
-4. There's a full range of variables you can customize. Check out [MDL's variables](https://github.com/google/material-design-lite/blob/master/src/_variables.scss) to learn more.
+4. There's a full range of variables you can customize. Check out [MDL's variables](https://github.com/google/material-design-lite/blob/v1.2.0/src/_variables.scss) to learn more.
 
-### If you want to import SASS files from MDL's source code: (Updated in `1.0.6_4`)
+### If you want to import SASS files from MDL's source code:
 
 They are all under `{zodiase:mdl-assets}/src` so have fun!
 

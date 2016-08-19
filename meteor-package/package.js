@@ -1,6 +1,6 @@
-var mdlVersion = '1.1.3';
-var revision = 1;
-var assetRevision = 1;
+var mdlVersion = '1.2.0';
+var revision = 0;
+var assetRevision = 0;
 var mdiVersion = '2.2.3';
 
 var packageVersion = (revision > 0) ? mdlVersion + '_' + revision : mdlVersion,
@@ -27,7 +27,7 @@ Package.onUse(function (api) {
   api.use([
     'ecmascript',
     'isobuild:compiler-plugin@1.0.0',
-    'fourseven:scss@3.8.0_1'
+    'fourseven:scss@3.8.1'
   ]);
   // `check` package is still in testing phase, lock version to prevent BC.
   api.use('zodiase:check@=0.0.4');
