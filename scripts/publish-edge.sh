@@ -4,15 +4,13 @@
 # This script publishes the edge version.
 ################################################################################
 
-RLSVER=1.3.5
-EDGE_VERSION=1.1.3_8
+RLSVER=1.3.5.1
+EDGE_VERSION=1.2.0
 
 SCRIPTDIR="$(dirname "$0")"
 ROOTDIR="${SCRIPTDIR}/../"
 
 cd $ROOTDIR/meteor-package
-
-##! Todo: Edit or check `package.js` to ensure the package name is "mdl-edge".
 
 # Install npm dependencies
 npm install

@@ -1,13 +1,13 @@
 {
   "name": "meteor-mdl",
-  "version": "1.1.3",
+  "version": "1.2.0",
   "description": "Google Material Design Lite for Meteor, with auto-upgrading, theme customization and SASS support.",
   "main": "package.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "npm install && meteor test-packages ./ --release 1.3.5"
+    "test": "npm install && meteor test-packages ./ --release 1.3.5.1"
   },
   "repository": {
     "type": "git",
