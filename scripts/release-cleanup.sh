@@ -4,8 +4,8 @@
 # This script cleans up the repo and creates a new branch for releasing.
 ################################################################################
 
-SRCBRANCH="dev"
-RLSBRANCH="dev-release"
+SRCBRANCH="master"
+RLSBRANCH="release"
 
 SCRIPTDIR="$(dirname "$0")"
 ROOTDIR="${SCRIPTDIR}/../"
@@ -25,7 +25,7 @@ git checkout -b $RLSBRANCH
 git clean -fdx
 
 # Remove unnecessary files.
-rm -f ForEachUpdate.md
+rm -f Developer.md
 rm -rf integration-tests meteor-package/node_modules scripts
 
 # Commit changes.
