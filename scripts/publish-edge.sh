@@ -5,7 +5,7 @@
 ################################################################################
 
 RLSVER=1.3.5.1
-EDGE_VERSION=1.2.0
+EDGE_VERSION=1.2.1
 
 SCRIPTDIR="$(dirname "$0")"
 ROOTDIR="${SCRIPTDIR}/../"
