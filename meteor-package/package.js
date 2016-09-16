@@ -3,6 +3,14 @@ var revision = 0;
 var assetRevision = 1;
 var mdiVersion = '2.2.3';
 
+var deps = {
+  'Meteor': '1.3.5',
+  'SCSS': 'fourseven:scss@3.8.1',
+  'check': 'zodiase:check@=0.0.5',
+  'npmExtend': '3.0.0',
+  'npmClone': '1.0.2'
+};
+
 var packageVersion = (revision > 0) ? mdlVersion + '_' + revision : mdlVersion,
     assetPackageVersion = (assetRevision > 0) ? mdlVersion + '_' + assetRevision : mdlVersion;
 
@@ -23,14 +31,14 @@ Package.describe({
 
 Package.onUse(function (api) {
   'use strict';
-  api.versionsFrom('1.3.5');
+  api.versionsFrom(deps.Meteor);
   api.use([
     'ecmascript',
     'isobuild:compiler-plugin@1.0.0',
-    'fourseven:scss@3.8.1'
+    deps.SCSS
   ]);
   // `check` package is still in testing phase, lock version to prevent BC.
-  api.use('zodiase:check@=0.0.4');
+  api.use(deps.check);
   // MDL Assets package has to match strictly.
   api.imply('zodiase:mdl-assets@=' + assetPackageVersion);
   // MDI can be freely updated.
@@ -77,15 +85,15 @@ Package.registerBuildPlugin({
   use: [
     'caching-compiler@1.0.0',
     'ecmascript',
-    'zodiase:check@=0.0.4',
+    deps.check,
     'zodiase:mdl-assets@=' + assetPackageVersion
   ],
   sources: [
     'plugin/build.js'
   ],
   npmDependencies: {
-    'extend': '3.0.0',
-    'clone': '1.0.2'
+    'extend': deps.npmExtend,
+    'clone': deps.npmClone
   }
 });
 
