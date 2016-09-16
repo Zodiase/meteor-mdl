@@ -1,7 +1,7 @@
-var mdlVersion = '1.2.0';
+var mdlVersion = '1.2.1';
 var revision = 0;
-var assetRevision = 1;
-var mdiVersion = '2.2.3';
+var assetRevision = 0;
+var mdiVersion = '3.0.1';
 
 var deps = {
   'Meteor': '1.3.5',
