@@ -1,9 +1,0 @@
-{
-  "jsLib": {
-    "minified": true
-  },
-  "theme": {
-    "primary": "pink",
-    "accent": "indigo"
-  }
-}
