@@ -5,9 +5,9 @@
 ################################################################################
 
 RLSVER=1.3.5.1
-EDGE_VERSION=1.2.1
+EDGE_VERSION=1.3.0
 
-SCRIPTDIR="$(dirname "$0")"
+SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ROOTDIR="${SCRIPTDIR}/../"
 
 cd $ROOTDIR/meteor-package

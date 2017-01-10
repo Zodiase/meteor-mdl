@@ -7,7 +7,7 @@
 SRCBRANCH="master"
 RLSBRANCH="release"
 
-SCRIPTDIR="$(dirname "$0")"
+SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ROOTDIR="${SCRIPTDIR}/../"
 
 cd $ROOTDIR
