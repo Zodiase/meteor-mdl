@@ -7,6 +7,7 @@ Change Log
     * Updated clone to 2.1.1.
     * Updated webcomponents.js to 0.7.24.
     * Moved dependency `webcomponents.js` into `package.js`.
+    * Removed logs about ignored config files.
 * v1.3.0
     * Updated MDl to v1.3.0.
 * v1.2.1

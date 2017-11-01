@@ -69,7 +69,6 @@ class Compiler extends MultiFileCachingCompiler {
     const pkgName = inputFile.getPackageName();
     if (!(pkgName === null || isTestName(pkgName))) {
       // Settings files loaded from packages are ignored.
-      log('Settings file ignored: ' + `{${pkgName}}/${inputFile.getPathInPackage()}`);
       return null;
     }
 
