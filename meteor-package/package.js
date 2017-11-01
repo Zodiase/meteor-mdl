@@ -1,28 +1,63 @@
+/**
+ * This is a Meteor package.
+ * `require` is not available in this file.
+ */
+
+var packageName = 'zodiase:mdl';
+/**
+ * This defines which MDL version to use.
+ * @type {String}
+ */
 var mdlVersion = '1.3.0';
+/**
+ * Since this Meteor package follows the version of MDL,
+ * we only use this revision number.
+ * @type {Number}
+ */
 var revision = 0;
+/**
+ * Since the asset package also follows the version of MDL,
+ * we only use this revision number.
+ * @type {Number}
+ */
 var assetRevision = 0;
+/**
+ * The actual version of this Meteor package.
+ * @type {String}
+ */
+var packageVersion = (revision > 0)
+                     ? mdlVersion + '_' + revision
+                     : mdlVersion;
+/**
+ * The version of the corresponding asset package.
+ * @type {String}
+ */
+var assetPackageVersion = (assetRevision > 0)
+                          ? mdlVersion + '_' + assetRevision
+                          : mdlVersion;
+/**
+ * This defines the version of the icon font package.
+ * @type {String}
+ */
 var mdiVersion = '3.0.1';
-
+/**
+ * Gather all dependencies in one place.
+ */
 var deps = {
-  'Meteor': '1.3.5',
-  'SCSS': 'fourseven:scss@3.8.1',
+  'ECMA': 'ecmascript@0.9.0',
+  'SCSS': 'fourseven:scss@4.5.4',
   'check': 'zodiase:check@=0.0.5',
-  'npmExtend': '3.0.0',
-  'npmClone': '1.0.2'
+  'npmExtend': '3.0.1',
+  'npmClone': '2.1.1'
 };
-
-var packageVersion = (revision > 0) ? mdlVersion + '_' + revision : mdlVersion,
-    assetPackageVersion = (assetRevision > 0) ? mdlVersion + '_' + assetRevision : mdlVersion;
-
-var packageName = 'mdl';
 
 if (process.env.EDGE_VERSION) {
   packageVersion = process.env.EDGE_VERSION;
-  packageName = 'mdl-edge';
+  packageName = 'zodiase:mdl-edge';
 }
 
 Package.describe({
-  name: 'zodiase:' + packageName,
+  name: packageName,
   version: packageVersion,
   summary: 'Google Material Design Lite for Meteor, with auto-upgrading, theme customization and SASS support.',
   git: 'https://github.com/Zodiase/meteor-mdl.git',
@@ -31,14 +66,15 @@ Package.describe({
 
 Package.onUse(function (api) {
   'use strict';
-  api.versionsFrom(deps.Meteor);
+
   api.use([
-    'ecmascript',
+    deps.ECMA,
     'isobuild:compiler-plugin@1.0.0',
-    deps.SCSS
+    deps.SCSS,
+    // `check` package is still in testing phase, lock version to prevent BC.
+    deps.check
   ]);
-  // `check` package is still in testing phase, lock version to prevent BC.
-  api.use(deps.check);
+
   // MDL Assets package has to match strictly.
   api.imply('zodiase:mdl-assets@=' + assetPackageVersion);
   // MDI can be freely updated.
@@ -71,7 +107,7 @@ Package.onTest(function (api) {
     'tinytest',
     'jquery',
     'zodiase:function-bind@0.0.1', // Polyfill for PhantomJS.
-    'zodiase:' + packageName
+    packageName
   ]);
   api.addFiles([
     'zodiase-mdl.json',
@@ -83,8 +119,8 @@ Package.onTest(function (api) {
 Package.registerBuildPlugin({
   name: 'build',
   use: [
+    deps.ECMA,
     'caching-compiler@1.0.0',
-    'ecmascript',
     deps.check,
     'zodiase:mdl-assets@=' + assetPackageVersion
   ],
@@ -96,17 +132,3 @@ Package.registerBuildPlugin({
     'clone': deps.npmClone
   }
 });
-
-var logLabel = 'zodiase:' + packageName;
-var log = function () {
-  var args = sliceArguments(arguments);
-  args.unshift('*', logLabel, '>');
-  console.log.apply(console, args);
-};
-var sliceArguments = function (_arguments) {
-  var args = new Array(_arguments.length);
-  for (var i = 0, n = _arguments.length; i < n; i++) {
-    args[i] = _arguments[i];
-  }
-  return args;
-};

@@ -1,14 +1,15 @@
 {
+  "lockfileVersion": 1,
   "dependencies": {
     "clone": {
       "version": "1.0.2",
       "resolved": "https://registry.npmjs.org/clone/-/clone-1.0.2.tgz",
-      "from": "clone@1.0.2"
+      "integrity": "sha1-Jgt6meux7f4kdTgXX3gyQ8sZ0Uk="
     },
     "extend": {
       "version": "3.0.0",
       "resolved": "https://registry.npmjs.org/extend/-/extend-3.0.0.tgz",
-      "from": "extend@3.0.0"
+      "integrity": "sha1-WkdDU7nzNT3dgXbf03uRyDpG8dQ="
     }
   }
 }

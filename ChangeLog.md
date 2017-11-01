@@ -1,5 +1,11 @@
 Change Log
 ------------------------------------------------------------------------------
+* vNEXT
+    * Updated fourseven:scss to v4.5.4.
+    * Updated ecmascript to 0.9.0 (Meteor release 1.6).
+    * Updated extend to 3.0.1.
+    * Updated clone to 2.1.1.
+    * Updated webcomponents.js to 0.7.24.
 * v1.3.0
     * Updated MDl to v1.3.0.
 * v1.2.1
