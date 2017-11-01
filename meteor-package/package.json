@@ -17,7 +17,5 @@
     "url": "https://github.com/Zodiase/meteor-mdl/issues"
   },
   "homepage": "https://github.com/Zodiase/meteor-mdl#readme",
-  "dependencies": {
-    "webcomponents.js": "^0.7.24"
-  }
+  "dependencies": {}
 }

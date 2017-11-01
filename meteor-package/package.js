@@ -47,6 +47,7 @@ var deps = {
   'ECMA': 'ecmascript@0.9.0',
   'SCSS': 'fourseven:scss@4.5.4',
   'check': 'zodiase:check@=0.0.5',
+  'npmWebcomponentsJs': '0.7.24',
   'npmExtend': '3.0.1',
   'npmClone': '2.1.1'
 };
@@ -128,6 +129,7 @@ Package.registerBuildPlugin({
     'plugin/build.js'
   ],
   npmDependencies: {
+    'webcomponents.js': deps.npmWebcomponentsJs,
     'extend': deps.npmExtend,
     'clone': deps.npmClone
   }
