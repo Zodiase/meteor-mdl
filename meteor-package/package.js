@@ -14,13 +14,13 @@ var mdlVersion = '1.3.0';
  * we only use this revision number.
  * @type {Number}
  */
-var revision = 0;
+var revision = 1;
 /**
  * Since the asset package also follows the version of MDL,
  * we only use this revision number.
  * @type {Number}
  */
-var assetRevision = 0;
+var assetRevision = 1;
 /**
  * The actual version of this Meteor package.
  * @type {String}
