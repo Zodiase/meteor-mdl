@@ -1,6 +1,12 @@
 Material Design Lite for Meteor
 ==============================================================================
 
+# Deprecation notice
+
+Note that [Google is phasing out Material Design Lite](https://github.com/google/material-design-lite#limited-support), replacing it with Material Design Components for the Web (MDC). Check out the corresponding Atmosphere package, [zodiase:mdc](https://atmospherejs.com/zodiase/mdc).
+
+# Material Design Lite
+
 > Material Design Lite lets you add a Material Design look and feel to your websites. It doesn’t rely on any JavaScript frameworks and aims to optimize for cross-device use, gracefully degrade in older browsers, and offer an experience that is immediately accessible.
 > - [getmdl.io](http://www.getmdl.io/index.html)
 
