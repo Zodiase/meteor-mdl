@@ -1,6 +1,8 @@
 Material Design Lite for Meteor
 ==============================================================================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Zodiase/meteor-mdl.svg)](https://greenkeeper.io/)
+
 > Material Design Lite lets you add a Material Design look and feel to your websites. It doesn’t rely on any JavaScript frameworks and aims to optimize for cross-device use, gracefully degrade in older browsers, and offer an experience that is immediately accessible.
 > - [getmdl.io](http://www.getmdl.io/index.html)
 
