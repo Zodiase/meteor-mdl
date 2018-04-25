@@ -1,0 +1,16 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "integration-tests/dashboard/package.json",
+        "integration-tests/issue1/package.json",
+        "integration-tests/issue10/package.json",
+        "integration-tests/issue2/package.json",
+        "integration-tests/material-icons/package.json",
+        "integration-tests/sass/package.json",
+        "integration-tests/settings/package.json",
+        "meteor-package/package.json"
+      ]
+    }
+  }
+}
